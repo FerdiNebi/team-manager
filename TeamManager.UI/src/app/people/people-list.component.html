@@ -1,5 +1,10 @@
 <ul class="list-group">
   <li class="list-group-item" *ngFor="let person of people">
     {{ person.name }}
+    <button type="button" class="btn btn-primary float-right" (click)="showCalendar(person)" *ngIf="!person.showCalendar">Show Calendar</button>
+    <div [hidden]="!person.showCalendar">
+      <button type="button" class="btn btn-primary float-right" (click)="person.showCalendar = false">Hide Calendar</button>
+      <div [id]="person.id"></div>
+    </div>
   </li>
 </ul>
