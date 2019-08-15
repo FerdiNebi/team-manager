@@ -1,0 +1,21 @@
+<div class="container">
+  <h1>Add a person</h1>
+  <form #personForm="ngForm">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        [(ngModel)]="model.name"
+        class="form-control"
+        id="name"
+        name="name"
+        #name="ngModel"
+        required
+      />
+    </div>
+
+    <button type="submit" class="btn btn-success" (click)="addPerson()" [disabled]="!personForm.form.valid || creating">
+      Add
+    </button>
+  </form>
+</div>

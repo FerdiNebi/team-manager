@@ -39,10 +39,15 @@ namespace TeamManager.PeopleService.Controllers
             return "value";
         }
 
-        // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task Post([FromBody] string name)
         {
+            if (!string.IsNullOrWhiteSpace(name)){
+                var person = new Person();
+                person.Name = name;
+                this._context.Add(person);
+                await this._context.SaveChangesAsync();
+            }
         }
 
         // PUT api/values/5

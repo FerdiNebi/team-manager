@@ -6,6 +6,11 @@ namespace TeamManager.PeopleService.Models
 {
     public class Person
     {
+        public Person()
+        {
+            this.Id = Guid.NewGuid();
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
