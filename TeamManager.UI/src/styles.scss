@@ -1,7 +1,9 @@
+@import '~@angular/cdk/overlay-prebuilt.css';
+
 /* You can add global styles to this file, and also import other style files */
-.month-container{
-    width: 20%;
-    float: left;
-    margin-left: 15px;
-    margin-right: 15px;
+.month-container {
+  width: 20%;
+  float: left;
+  margin-left: 15px;
+  margin-right: 15px;
 }

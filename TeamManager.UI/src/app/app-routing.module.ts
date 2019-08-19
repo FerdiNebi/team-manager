@@ -5,6 +5,7 @@ import { PeopleCreateComponent } from './people/people-create.component';
 
 
 const routes: Routes = [
+  { path: '', redirectTo: '/people', pathMatch: 'full' },
   { path: 'people', component: PeopleListComponent},
   { path: 'people/add', component: PeopleCreateComponent}
 ];

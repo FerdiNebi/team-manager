@@ -1,10 +1,36 @@
 <ul class="list-group">
   <li class="list-group-item" *ngFor="let person of people">
     {{ person.name }}
-    <button type="button" class="btn btn-primary float-right" (click)="showCalendar(person)" *ngIf="!person.showCalendar">Show Calendar</button>
+    <button
+      type="button"
+      class="btn btn-primary float-right"
+      (click)="showCalendar(person)"
+      *ngIf="!person.showCalendar"
+    >
+      Show Calendar
+    </button>
     <div [hidden]="!person.showCalendar">
-      <button type="button" class="btn btn-primary float-right" (click)="person.showCalendar = false">Hide Calendar</button>
+      <button
+        type="button"
+        class="btn btn-primary float-right"
+        (click)="person.showCalendar = false"
+      >
+        Hide Calendar
+      </button>
       <div [id]="person.id"></div>
     </div>
   </li>
 </ul>
+
+<ng-template #feedbackMenu let-target>
+  <section class="feedback-menu">
+    <div>
+      <div class="btn-outline-primary btn-sm" (click)="addFeedback(target)">
+        Add feedback
+      </div>
+      <div class="btn-outline-primary btn-sm" (click)="addOneOnOne(target)">
+        Add one-on-one
+      </div>
+    </div>
+  </section>
+</ng-template>

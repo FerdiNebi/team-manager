@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { PeopleService } from './people/people.service';
 import { PeopleListComponent } from './people/people-list.component';
 import { PeopleCreateComponent } from './people/people-create.component';
+import { FeedbackService } from './feedback/feedback.service';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [
@@ -19,9 +21,10 @@ import { PeopleCreateComponent } from './people/people-create.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    OverlayModule
   ],
-  providers: [PeopleService],
+  providers: [PeopleService, FeedbackService],
   entryComponents: [PeopleListComponent, PeopleCreateComponent],
   bootstrap: [AppComponent]
 })
