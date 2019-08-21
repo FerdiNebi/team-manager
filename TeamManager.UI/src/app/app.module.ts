@@ -10,12 +10,14 @@ import { PeopleListComponent } from './people/people-list.component';
 import { PeopleCreateComponent } from './people/people-create.component';
 import { FeedbackService } from './feedback/feedback.service';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { CalendarComponent } from './shared/calendar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PeopleListComponent, 
-    PeopleCreateComponent
+    PeopleCreateComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,

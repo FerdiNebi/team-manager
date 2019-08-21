@@ -33,7 +33,7 @@
               "node_modules/bootstrap-year-calendar/css/bootstrap-year-calendar.min.css"
             ],
             "scripts": [
-              "node_modules/jquery/jquery.min.js",
+              "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/bootstrap-year-calendar/js/bootstrap-year-calendar.min.js"
             ]

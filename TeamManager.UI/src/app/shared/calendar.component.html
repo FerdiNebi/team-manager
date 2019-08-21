@@ -1,0 +1,15 @@
+<div #calendar></div>
+
+<ng-template #contextMenu let-target>
+  <section class="context-menu">
+    <div>
+      <div
+        *ngFor="let contextMenuAction of contextMenuActions"
+        class="btn-outline-primary btn-sm"
+        (click)="contextMenuActionClick(contextMenuAction, target)"
+      >
+        {{ contextMenuAction }}
+      </div>
+    </div>
+  </section>
+</ng-template>
