@@ -11,6 +11,10 @@ import { PeopleCreateComponent } from './people/people-create.component';
 import { FeedbackService } from './feedback/feedback.service';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CalendarComponent } from './shared/calendar.component';
+import { StoreModule } from '@ngrx/store';
+import { peopleReducer } from './store/reducers/people.reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { PeopleEffects } from './store/effects/people.effects';
 
 @NgModule({
   declarations: [
@@ -24,7 +28,9 @@ import { CalendarComponent } from './shared/calendar.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    OverlayModule
+    OverlayModule,
+    StoreModule.forRoot({people: peopleReducer}),
+    EffectsModule.forRoot([PeopleEffects])
   ],
   providers: [PeopleService, FeedbackService],
   entryComponents: [PeopleListComponent, PeopleCreateComponent],

@@ -3,6 +3,10 @@ import { OverlayRef, Overlay } from '@angular/cdk/overlay';
 import { PeopleService } from './people.service';
 import { Person } from './person';
 import { FeedbackService } from '../feedback/feedback.service';
+import { IAppState } from '../store/state/app-state';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { GetPeople } from '../store/actions/people.actions';
 
 declare var $: any
 
@@ -12,14 +16,16 @@ declare var $: any
     styleUrls: ['./people-list.component.scss']
 })
 export class PeopleListComponent implements OnInit {
-    people: Person[];
+    people$: Observable<Person[]> = this.store.pipe(select(s => s.people));
     calendarContextMenuActions = ['Add feedback', 'Add one-on-one'];
 
     constructor(private peopleService: PeopleService,
+        private store: Store<IAppState>,
         private feedbackService: FeedbackService) { }
 
     ngOnInit(): void {
-        this.peopleService.getPeople().subscribe(people => this.people = people);
+        this.store.dispatch(new GetPeople());
+        // this.peopleService.getPeople().subscribe(people => this.people = people);
     }
 
     onContextMenuActionClicked(e) {

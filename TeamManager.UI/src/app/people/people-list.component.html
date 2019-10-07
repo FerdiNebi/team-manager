@@ -1,5 +1,5 @@
 <ul class="list-group">
-  <li class="list-group-item" *ngFor="let person of people">
+  <li class="list-group-item" *ngFor="let person of people$ | async">
     {{ person.name }}
     <button
       type="button"
