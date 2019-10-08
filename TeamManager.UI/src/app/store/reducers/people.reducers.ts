@@ -8,6 +8,9 @@ export function peopleReducer(state = initialState, action: peopleActions.People
         case peopleActions.PeopleActionTypes.GetPeopleSuccess: {
             return action.payload;
         }
+        case peopleActions.PeopleActionTypes.AddPersonSuccess: {
+            return [action.payload, ...state];
+        }
         default: {
             return state;
         }

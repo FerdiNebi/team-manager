@@ -14,6 +14,12 @@ export class PeopleEffects {
         switchMap(people => of(new peopleActions.GetPeopleSuccess(people)))
         );
 
+    @Effect() addPerson$ = this.actions$.pipe(
+        ofType<peopleActions.AddPerson>(peopleActions.PeopleActionTypes.AddPerson),
+        switchMap(a => this.peopleService.addPerson(a.payload)),
+        switchMap((r:any) => of(new peopleActions.AddPersonSuccess(r)))
+    );
+
     constructor(
         private actions$: Actions,
         private peopleService: PeopleService

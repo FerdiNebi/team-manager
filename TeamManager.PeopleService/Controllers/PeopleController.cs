@@ -40,14 +40,18 @@ namespace TeamManager.PeopleService.Controllers
         }
 
         [HttpPost]
-        public async Task Post([FromBody] string name)
+        public async Task<Person> Post([FromBody] string name)
         {
             if (!string.IsNullOrWhiteSpace(name)){
                 var person = new Person();
                 person.Name = name;
                 this._context.Add(person);
                 await this._context.SaveChangesAsync();
+
+                return person;
             }
+
+            return null;
         }
 
         // PUT api/values/5

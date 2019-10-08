@@ -7,7 +7,9 @@ import { Person } from 'src/app/people/person';
  */
 export enum PeopleActionTypes {
     GetPeople = '[People] GetPeople',
-    GetPeopleSuccess = '[People] GetPeopleSuccess'
+    GetPeopleSuccess = '[People] GetPeopleSuccess',
+    AddPerson = '[People] AddPerson',
+    AddPersonSuccess = '[People] AddPersonSuccess'
 };
 
 /**
@@ -27,10 +29,24 @@ export class GetPeopleSuccess implements Action {
     constructor(public payload: Person[]) { }
 }
 
+export class AddPerson implements Action {
+    readonly type = PeopleActionTypes.AddPerson;
+
+    constructor(public payload: string) { }
+}
+
+export class AddPersonSuccess implements Action {
+    readonly type = PeopleActionTypes.AddPersonSuccess;
+
+    constructor(public payload: Person) { }
+}
+
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
  */
 export type PeopleActions
-                        = GetPeople
-                        | GetPeopleSuccess;
+    = GetPeople
+    | GetPeopleSuccess
+    | AddPerson
+    | AddPersonSuccess;

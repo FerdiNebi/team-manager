@@ -19,13 +19,11 @@ export class PeopleListComponent implements OnInit {
     people$: Observable<Person[]> = this.store.pipe(select(s => s.people));
     calendarContextMenuActions = ['Add feedback', 'Add one-on-one'];
 
-    constructor(private peopleService: PeopleService,
-        private store: Store<IAppState>,
+    constructor(private store: Store<IAppState>,
         private feedbackService: FeedbackService) { }
 
     ngOnInit(): void {
         this.store.dispatch(new GetPeople());
-        // this.peopleService.getPeople().subscribe(people => this.people = people);
     }
 
     onContextMenuActionClicked(e) {
