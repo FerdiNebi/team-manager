@@ -62,8 +62,16 @@ namespace TeamManager.PeopleService.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<bool> Delete(Guid id)
         {
+            var person = this._context.People.Find(id);
+            if (person != null){
+                this._context.Remove(person);
+                await this._context.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
         }
     }
 }

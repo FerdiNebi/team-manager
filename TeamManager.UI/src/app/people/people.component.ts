@@ -11,11 +11,11 @@ import { GetPeople } from '../store/actions/people.actions';
 declare var $: any
 
 @Component({
-    selector: 'people-list',
-    templateUrl: './people-list.component.html',
-    styleUrls: ['./people-list.component.scss']
+    selector: 'people',
+    templateUrl: './people.component.html',
+    styleUrls: ['./people.component.scss']
 })
-export class PeopleListComponent implements OnInit {
+export class PeopleComponent implements OnInit {
     people$: Observable<Person[]> = this.store.pipe(select(s => s.people));
     calendarContextMenuActions = ['Add feedback', 'Add one-on-one'];
 

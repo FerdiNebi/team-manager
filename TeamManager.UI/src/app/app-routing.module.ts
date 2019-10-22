@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PeopleListComponent } from './people/people-list.component';
-import { PeopleCreateComponent } from './people/people-create.component';
+import { PeopleComponent } from './people/people.component';
+import { PeopleAdministrationComponent } from './people/people-administration/people-administration.component';
 
 
 const routes: Routes = [
   { path: '', redirectTo: '/people', pathMatch: 'full' },
-  { path: 'people', component: PeopleListComponent},
-  { path: 'people/add', component: PeopleCreateComponent}
+  { path: 'people', component: PeopleComponent},
+  { path: 'people/administration', component: PeopleAdministrationComponent}
 ];
 
 @NgModule({

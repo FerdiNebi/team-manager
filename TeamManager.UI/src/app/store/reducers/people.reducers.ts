@@ -11,6 +11,9 @@ export function peopleReducer(state = initialState, action: peopleActions.People
         case peopleActions.PeopleActionTypes.AddPersonSuccess: {
             return [action.payload, ...state];
         }
+        case peopleActions.PeopleActionTypes.DeletePersonSuccess: {
+            return state.filter(p => p.id !== action.payload);
+        }
         default: {
             return state;
         }

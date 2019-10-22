@@ -9,7 +9,9 @@ export enum PeopleActionTypes {
     GetPeople = '[People] GetPeople',
     GetPeopleSuccess = '[People] GetPeopleSuccess',
     AddPerson = '[People] AddPerson',
-    AddPersonSuccess = '[People] AddPersonSuccess'
+    AddPersonSuccess = '[People] AddPersonSuccess',
+    DeletePerson = '[People] DeletePerson',
+    DeletePersonSuccess = '[People] DeletePersonSuccess'
 };
 
 /**
@@ -41,6 +43,18 @@ export class AddPersonSuccess implements Action {
     constructor(public payload: Person) { }
 }
 
+export class DeletePerson implements Action {
+    readonly type = PeopleActionTypes.DeletePerson;
+
+    constructor(public payload: Person) { }
+}
+
+export class DeletePersonSuccess implements Action {
+    readonly type = PeopleActionTypes.DeletePersonSuccess;
+
+    constructor(public payload: string) { }
+}
+
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
@@ -49,4 +63,6 @@ export type PeopleActions
     = GetPeople
     | GetPeopleSuccess
     | AddPerson
-    | AddPersonSuccess;
+    | AddPersonSuccess
+    | DeletePerson
+    | DeletePersonSuccess;

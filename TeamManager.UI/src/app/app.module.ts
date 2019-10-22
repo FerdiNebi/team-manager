@@ -6,8 +6,8 @@ import { FormsModule }   from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PeopleService } from './people/people.service';
-import { PeopleListComponent } from './people/people-list.component';
-import { PeopleCreateComponent } from './people/people-create.component';
+import { PeopleComponent } from './people/people.component';
+import { PeopleCreateComponent } from './people/people-create/people-create.component';
 import { FeedbackService } from './feedback/feedback.service';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CalendarComponent } from './shared/calendar.component';
@@ -15,13 +15,17 @@ import { StoreModule } from '@ngrx/store';
 import { peopleReducer } from './store/reducers/people.reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { PeopleEffects } from './store/effects/people.effects';
+import { PeopleAdministrationComponent } from './people/people-administration/people-administration.component';
+import { PeopleDeleteComponent } from './people/people-delete/people-delete.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PeopleListComponent, 
+    PeopleComponent, 
     PeopleCreateComponent,
-    CalendarComponent
+    CalendarComponent,
+    PeopleAdministrationComponent,
+    PeopleDeleteComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +37,7 @@ import { PeopleEffects } from './store/effects/people.effects';
     EffectsModule.forRoot([PeopleEffects])
   ],
   providers: [PeopleService, FeedbackService],
-  entryComponents: [PeopleListComponent, PeopleCreateComponent],
+  entryComponents: [PeopleComponent, PeopleAdministrationComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

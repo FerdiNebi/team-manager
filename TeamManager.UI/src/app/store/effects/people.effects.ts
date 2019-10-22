@@ -20,6 +20,12 @@ export class PeopleEffects {
         switchMap((r:any) => of(new peopleActions.AddPersonSuccess(r)))
     );
 
+    @Effect() deletePerson$ = this.actions$.pipe(
+        ofType<peopleActions.DeletePerson>(peopleActions.PeopleActionTypes.DeletePerson),
+        switchMap(a => this.peopleService.removePerson(a.payload.id)),
+        switchMap(p => of(new peopleActions.DeletePersonSuccess(p)))
+    );
+
     constructor(
         private actions$: Actions,
         private peopleService: PeopleService
