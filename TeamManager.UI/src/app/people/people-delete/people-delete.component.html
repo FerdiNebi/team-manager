@@ -1,27 +1,31 @@
 <div class="container">
-  <h1>Remove a person</h1>
-  <form #personForm="ngForm">
-    <div class="form-group">
-      <label for="name">Name</label>
-      <select
-        type="text"
-        [(ngModel)]="personToDelete"
-        class="form-control"
-        id="name"
-        name="name"
-        required
-      >
-        <option *ngFor="let p of people$ | async" [ngValue]="p">{{ p.name }}</option>
-      </select>
-    </div>
+  <div class="col-4 nopadding">
+    <h1>Remove a person</h1>
+    <form #personForm="ngForm">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <select
+          type="text"
+          [(ngModel)]="personToDelete"
+          class="form-control"
+          id="name"
+          name="name"
+          required
+        >
+          <option *ngFor="let p of people$ | async" [ngValue]="p">{{
+            p.name
+          }}</option>
+        </select>
+      </div>
 
-    <button
-      type="submit"
-      class="btn btn-success"
-      (click)="deletePerson()"
-      [disabled]="!personForm.form.valid || deleting"
-    >
-      Remove
-    </button>
-  </form>
+      <button
+        type="submit"
+        class="btn btn-success"
+        (click)="deletePerson()"
+        [disabled]="!personForm.form.valid || deleting"
+      >
+        Remove
+      </button>
+    </form>
+  </div>
 </div>

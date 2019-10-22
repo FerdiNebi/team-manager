@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs admin-menu">
   <li class="nav-item">
     <a class="nav-link cursor-pointer" [class.active]="action === 'AddPerson'" (click)="action = 'AddPerson'">Add a person</a>
   </li>
@@ -7,5 +7,7 @@
   </li>
 </ul>
 
-<people-create (personAdded)="personAdded($event)" [hidden]="action != 'AddPerson'"></people-create>
-<people-delete (personDeleted)="personDeleted($event)" [hidden]="action != 'RemovePerson'"></people-delete>
+<div class="admin-body">
+    <people-create (personAdded)="personAdded($event)" [hidden]="action != 'AddPerson'"></people-create>
+    <people-delete (personDeleted)="personDeleted($event)" [hidden]="action != 'RemovePerson'"></people-delete>
+</div>

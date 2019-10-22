@@ -7,7 +7,7 @@ import { PeopleAdministrationComponent } from './people/people-administration/pe
 const routes: Routes = [
   { path: '', redirectTo: '/people', pathMatch: 'full' },
   { path: 'people', component: PeopleComponent},
-  { path: 'people/administration', component: PeopleAdministrationComponent}
+  { path: 'administration', component: PeopleAdministrationComponent}
 ];
 
 @NgModule({
