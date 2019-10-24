@@ -17,7 +17,7 @@ export class PeopleDeleteComponent implements OnInit {
 
   @Output() personDeleted = new EventEmitter<string>();
   deleting: boolean = false;
-  personToDelete: Person = new Person();
+  personToDelete: Person = null;
   people$: Observable<Person[]> = this.store.pipe(select(s => s.people));
   readonly deleteConfirmationDialogName: string = "delete-person-confirmation";
   private subscriptions: Subscription[] = [];
@@ -30,6 +30,7 @@ export class PeopleDeleteComponent implements OnInit {
     ).subscribe(deleteSuccess => {
       this.deleting = false;
       this.personDeleted.emit(deleteSuccess.payload);
+      this.personToDelete = null;
     });
 
     this.subscriptions.push(subscription);
