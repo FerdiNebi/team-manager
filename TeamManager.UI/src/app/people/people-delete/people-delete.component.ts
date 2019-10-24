@@ -6,6 +6,7 @@ import { IAppState } from 'src/app/store/state/app-state';
 import { Actions, ofType } from '@ngrx/effects';
 import { AddPerson } from 'src/app/store/actions/people.actions';
 import * as peopleActions from '../../store/actions/people.actions';
+import { ModalDialogService } from 'src/app/services/modal-dialog.service';
 
 @Component({
   selector: 'people-delete',
@@ -18,9 +19,10 @@ export class PeopleDeleteComponent implements OnInit {
   deleting: boolean = false;
   personToDelete: Person = new Person();
   people$: Observable<Person[]> = this.store.pipe(select(s => s.people));
+  readonly deleteConfirmationDialogName: string = "delete-person-confirmation";
   private subscriptions: Subscription[] = [];
 
-  constructor(private store: Store<IAppState>, private actions$: Actions) { }
+  constructor(private store: Store<IAppState>, private actions$: Actions, private modalService: ModalDialogService) { }
 
   ngOnInit(): void {
     let subscription = this.actions$.pipe(
@@ -41,7 +43,18 @@ export class PeopleDeleteComponent implements OnInit {
   }
 
   deletePerson() {
+    if (this.personToDelete && this.personToDelete.name) {
+      this.modalService.open(this.deleteConfirmationDialogName);
+    }
+  }
+
+  confirmDeletePerson() {
     this.deleting = true;
     this.store.dispatch(new peopleActions.DeletePerson(this.personToDelete));
+    this.modalService.close(this.deleteConfirmationDialogName);
+  }
+
+  cancel() {
+    this.modalService.close(this.deleteConfirmationDialogName);
   }
 }

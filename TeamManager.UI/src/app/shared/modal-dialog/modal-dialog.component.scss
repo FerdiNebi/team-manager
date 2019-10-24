@@ -1,0 +1,38 @@
+.tm-modal-dialog{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    overflow: auto;
+    z-index: 1000;
+
+    .tm-modal-dialog-body{
+        padding: 20px;
+        background: #fff;
+        vertical-align: middle;
+        min-width: 300px;
+        width: 30%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) !important;
+    }    
+}
+
+.tm-modal-background {
+    /* modal background fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    /* semi-transparent black  */
+    background-color: #000;
+    opacity: 0.75;
+    
+    /* z-index must be below .modal and above everything else  */
+    z-index: 900;
+}

@@ -17,6 +17,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { PeopleEffects } from './store/effects/people.effects';
 import { PeopleAdministrationComponent } from './people/people-administration/people-administration.component';
 import { PeopleDeleteComponent } from './people/people-delete/people-delete.component';
+import { ModalDialogComponent } from './shared/modal-dialog/modal-dialog.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { PeopleDeleteComponent } from './people/people-delete/people-delete.comp
     PeopleCreateComponent,
     CalendarComponent,
     PeopleAdministrationComponent,
-    PeopleDeleteComponent
+    PeopleDeleteComponent,
+    ModalDialogComponent
   ],
   imports: [
     BrowserModule,
