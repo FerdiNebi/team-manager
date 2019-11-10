@@ -6,7 +6,7 @@ import { switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class PeopleService {
-  private readonly ServiceUrl: string = "https://localhost:5001/api/people";
+  private readonly ServiceUrl: string = "http://localhost:5000/api/people";
 
   constructor(private http: HttpClient) {
   }

@@ -1,0 +1,32 @@
+version: '2.2'
+
+services:
+  people:
+    container_name: PeopleService
+    build:
+      context: ./TeamManager.PeopleService/
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./TeamManager.PeopleService:/app
+    environment:
+      - 'ConnectionString:TeamManager=server=192.168.0.104,1433;database=TeamManager;User Id=myUser;Password=admin@2;MultipleActiveResultSets=True'
+      - 'ASPNETCORE_URLS=http://*:5000'
+      - 'DOTNET_USE_POLLING_FILE_WATCHER=1'
+    networks:
+      - team-manager-network
+  ui:
+    container_name: UI
+    build:      
+      context: ./TeamManager.UI/
+      dockerfile: Dockerfile
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./TeamManager.UI/src:/home/app/angular-app/src
+    networks:
+      - team-manager-network
+networks:
+  team-manager-network:
+    driver: bridge

@@ -45,9 +45,9 @@ namespace TeamManager.PeopleService
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
             app.UseCors(options =>
-                options.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader()
+                options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
             );
             app.UseMvc();
         }
