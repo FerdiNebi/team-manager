@@ -1,37 +1,25 @@
 <div class="container">
-  <div class="col-4 nopadding">
-    <h1>Remove a person</h1>
-    <form #personForm="ngForm">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <select
-          type="text"
-          [(ngModel)]="personToDelete"
-          class="form-control"
-          id="name"
-          name="name"
-          required
-        >
-          <option *ngFor="let p of people$ | async" [ngValue]="p">{{
-            p.name
-          }}</option>
+    <div class="col-4 nopadding">
+        <h1>Remove a person</h1>
+        <form #personForm="ngForm">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <select type="text" [(ngModel)]="personToDelete" class="form-control" id="name" name="name" required>
+          <option *ngFor="let p of people$ | async" [ngValue]="p" >
+            {{p.name}}
+          </option>
         </select>
-      </div>
+            </div>
 
-      <button
-        type="submit"
-        class="btn btn-success"
-        (click)="deletePerson()"
-        [disabled]="!personForm.form.valid || deleting"
-      >
+            <button type="submit" class="btn btn-success" (click)="deletePerson()" [disabled]="!personForm.form.valid || deleting">
         Remove
       </button>
-    </form>
-  </div>
+        </form>
+    </div>
 </div>
 
-<modal-dialog id='{{deleteConfirmationDialogName}}'>
-  <p>Are you sure you want to delete {{personToDelete.name}}</p>
-  <button type="button" class="btn btn-danger" (click)="confirmDeletePerson()">Delete</button>
-  <button type="button" class="btn btn-link" (click)="cancel()">Cancel</button>
+<modal-dialog id='{{deleteConfirmationDialogName}}' *ngIf="personToDelete">
+    <p>Are you sure you want to delete {{personToDelete.name}}</p>
+    <button type="button" class="btn btn-danger" (click)="confirmDeletePerson()">Delete</button>
+    <button type="button" class="btn btn-link" (click)="cancel()">Cancel</button>
 </modal-dialog>

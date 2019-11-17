@@ -1,21 +1,36 @@
-version: '2.2'
+version: '3.7'
 
 services:
+  db:
+    image: mcr.microsoft.com/mssql/server
+    container_name: db
+    ports:
+      - 1433:1433
+    environment:
+      - ACCEPT_EULA=y
+      - SA_PASSWORD=sa12345!
+    networks:
+      - team-manager-network
+    volumes:
+      - database:/var/opt/mssql
   people:
     container_name: PeopleService
     build:
       context: ./TeamManager.PeopleService/
       dockerfile: Dockerfile
+    restart: on-failure
     ports:
       - "5000:5000"
     volumes:
       - ./TeamManager.PeopleService:/app
     environment:
-      - 'ConnectionString:TeamManager=server=192.168.0.104,1433;database=TeamManager;User Id=myUser;Password=admin@2;MultipleActiveResultSets=True'
+      - 'ConnectionString:TeamManager=server=db,1433;database=TeamManager;User Id=sa;Password=sa12345!;MultipleActiveResultSets=True'
       - 'ASPNETCORE_URLS=http://*:5000'
       - 'DOTNET_USE_POLLING_FILE_WATCHER=1'
     networks:
       - team-manager-network
+    depends_on:
+      - db
   ui:
     container_name: UI
     build:      
@@ -27,6 +42,11 @@ services:
       - ./TeamManager.UI/src:/home/app/angular-app/src
     networks:
       - team-manager-network
+    depends_on:
+      - db
+      - people
 networks:
   team-manager-network:
     driver: bridge
+volumes: 
+  database: 

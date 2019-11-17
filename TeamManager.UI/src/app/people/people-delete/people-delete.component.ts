@@ -18,13 +18,14 @@ export class PeopleDeleteComponent implements OnInit {
   @Output() personDeleted = new EventEmitter<string>();
   deleting: boolean = false;
   personToDelete: Person = null;
-  people$: Observable<Person[]> = this.store.pipe(select(s => s.people));
+  people$: Observable<Person[]>;
   readonly deleteConfirmationDialogName: string = "delete-person-confirmation";
   private subscriptions: Subscription[] = [];
 
   constructor(private store: Store<IAppState>, private actions$: Actions, private modalService: ModalDialogService) { }
 
   ngOnInit(): void {
+    this.people$ = this.store.pipe(select(s => s.people));
     let subscription = this.actions$.pipe(
       ofType<peopleActions.DeletePersonSuccess>(peopleActions.PeopleActionTypes.DeletePersonSuccess)
     ).subscribe(deleteSuccess => {
