@@ -3,10 +3,11 @@ import { Person } from './person';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class PeopleService {
-  private readonly ServiceUrl: string = "http://localhost:5000/api/people";
+  private readonly ServiceUrl: string = environment.peopleServiceUrl;
 
   constructor(private http: HttpClient) {
   }
