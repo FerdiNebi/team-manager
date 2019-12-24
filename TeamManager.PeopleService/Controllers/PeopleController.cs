@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TeamManager.PeopleService.Models;
+using TeamManager.PeopleService.Services;
 
 namespace TeamManager.PeopleService.Controllers
 {
@@ -12,66 +13,43 @@ namespace TeamManager.PeopleService.Controllers
     [ApiController]
     public class PeopleController : ControllerBase
     {
-        private readonly PeopleServiceContext _context;
+        private readonly IPeopleService peopleService;
 
-        public PeopleController(PeopleServiceContext context)
+        public PeopleController(IPeopleService _peopleService)
         {
-            this._context = context;
-
-            if (this._context.People.Count() == 0)
-            {
-                this._context.People.Add(new Person() { Name = "John" });
-                this._context.SaveChanges();
-            }
+            this.peopleService = _peopleService;
         }
 
         // GET api/values
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Person>>> Get()
+        public async Task<IEnumerable<Person>> Get()
         {
-            return await this._context.People.ToListAsync();
-        }
-
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
-        {
-            return "value";
+            return await this.peopleService.GetPeopleAsync();
         }
 
         [HttpPost]
-        public async Task<Person> Post([FromBody] string name)
+        public async Task<ActionResult> Post([FromBody] string name)
         {
-            if (!string.IsNullOrWhiteSpace(name)){
-                var person = new Person();
-                person.Name = name;
-                this._context.Add(person);
-                await this._context.SaveChangesAsync();
-
-                return person;
+            Person person = await this.peopleService.CreatePersonAsync(name);
+            if (person != null)
+            {
+                return Ok(person);
             }
 
-            return null;
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
+            return BadRequest();
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public async Task<bool> Delete(Guid id)
+        public async Task<ActionResult> Delete(Guid id)
         {
-            var person = this._context.People.Find(id);
-            if (person != null){
-                this._context.Remove(person);
-                await this._context.SaveChangesAsync();
-                return true;
+            bool deleted = await this.peopleService.DeletePersonAsync(id);
+            if (deleted)
+            {
+                return Ok();
             }
 
-            return false;
+            return BadRequest();
         }
     }
 }

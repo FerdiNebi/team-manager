@@ -8,4 +8,4 @@ ENV DOTNET_USE_POLLING_FILE_WATCHER=1
 
 WORKDIR /app
 
-CMD ["/bin/bash", "-c", "dotnet ef database update && dotnet restore && dotnet watch run"]
+CMD ["/bin/bash", "-c", "dotnet restore && dotnet watch run"]

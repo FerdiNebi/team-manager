@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using TeamManager.PeopleService.Models;
 
-namespace TeamManager.PeopleService.Models
+namespace TeamManager.PeopleService.Data
 {
     public class PeopleServiceContext : DbContext
     {

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using TeamManager.PeopleService.Data;
 using TeamManager.PeopleService.Models;
 
 namespace TeamManager.PeopleService.Migrations
