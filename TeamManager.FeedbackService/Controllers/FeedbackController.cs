@@ -19,21 +19,21 @@ namespace TeamManager.FeedbackService.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Feedback>>> Get()
+        public async Task<ActionResult<IEnumerable<Feedback>>> Get([FromQuery]Guid personId)
         {
-            var feedbackItems = await this.service.GetAllAsync();
+            var feedbackItems = await this.service.GetAllAsync(personId);
             return Ok(feedbackItems);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Feedback>> Get(Guid id)
-        {
-            var feedbackItem = await this.service.GetAsync(id);
-            if (feedbackItem == null)
-                return BadRequest();
+        // [HttpGet("{id}")]
+        // public async Task<ActionResult<Feedback>> Get(Guid id)
+        // {
+        //     var feedbackItem = await this.service.GetAsync(id);
+        //     if (feedbackItem == null)
+        //         return BadRequest();
 
-            return Ok(feedbackItem);
-        }
+        //     return Ok(feedbackItem);
+        // }
 
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] Feedback feedback)
@@ -41,7 +41,7 @@ namespace TeamManager.FeedbackService.Controllers
             if (this.ModelState.IsValid)
             {
                 await this.service.CreateAsync(feedback);
-                return Ok();
+                return CreatedAtRoute(string.Empty, feedback);
             }
 
             return BadRequest();

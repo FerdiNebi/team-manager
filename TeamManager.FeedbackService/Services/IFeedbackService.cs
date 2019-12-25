@@ -7,7 +7,7 @@ namespace TeamManager.FeedbackService.Services
 {
     public interface IFeedbackService
     {
-         Task<IEnumerable<Feedback>> GetAllAsync();
+         Task<IEnumerable<Feedback>> GetAllAsync(Guid personId);
 
          Task<Feedback> GetAsync(Guid id);
 

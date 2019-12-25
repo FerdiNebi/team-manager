@@ -1,28 +1,5 @@
 <ul class="list-group people-list">
   <li class="list-group-item" *ngFor="let person of people$ | async">
-    {{ person.name }}
-    <button
-      type="button"
-      class="btn btn-primary float-right"
-      (click)="showCalendar(person)"
-      *ngIf="!person.showCalendar"
-    >
-      Show Calendar
-    </button>
-    <div [hidden]="!person.showCalendar" *ngIf="person.calendarInitialized">
-      <button
-        type="button"
-        class="btn btn-primary float-right"
-        (click)="person.showCalendar = false"
-      >
-        Hide Calendar
-      </button>
-      <calendar
-        [person]="person"
-        [contextMenuActions]="calendarContextMenuActions"
-        (contextMenuActionClicked)="onContextMenuActionClicked($event)"
-        (dayRendered)="dayRendered($event)"
-      ></calendar>
-    </div>
+    <person [person]="person"></person>
   </li>
 </ul>

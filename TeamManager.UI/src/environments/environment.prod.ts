@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  peopleServiceUrl: "http://teammanager-peopleservice.azurewebsites.net/api/people"
+  peopleServiceUrl: "http://teammanager-peopleservice.azurewebsites.net/api/people",
+  feedbackServiceUrl: "http://teammanager-feedbackservice.azurewebsites.net/api/feedback",
 };

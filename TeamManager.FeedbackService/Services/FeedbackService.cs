@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TeamManager.FeedbackService.Data;
@@ -41,9 +42,9 @@ namespace TeamManager.FeedbackService.Services
             return await this.context.Feedbacks.FindAsync(id);
         }
 
-        public async Task<IEnumerable<Feedback>> GetAllAsync()
+        public async Task<IEnumerable<Feedback>> GetAllAsync(Guid personId)
         {
-            return await this.context.Feedbacks.AsNoTracking().ToListAsync();
+            return await this.context.Feedbacks.Where(f => f.PersonId == personId).AsNoTracking().ToListAsync();
         }
 
         public async Task<Feedback> UpdateAsync(Feedback feedback)

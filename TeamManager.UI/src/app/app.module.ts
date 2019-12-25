@@ -18,11 +18,15 @@ import { PeopleEffects } from './store/effects/people.effects';
 import { PeopleAdministrationComponent } from './people/people-administration/people-administration.component';
 import { PeopleDeleteComponent } from './people/people-delete/people-delete.component';
 import { ModalDialogComponent } from './shared/modal-dialog/modal-dialog.component';
+import { PersonComponent } from './people/person.component';
+import { FeedbackEffects } from './store/effects/feedback.effects';
+import { feedbackReducer } from './store/reducers/feedback.reducers';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PeopleComponent, 
+    PeopleComponent,
+    PersonComponent,
     PeopleCreateComponent,
     CalendarComponent,
     PeopleAdministrationComponent,
@@ -35,8 +39,8 @@ import { ModalDialogComponent } from './shared/modal-dialog/modal-dialog.compone
     HttpClientModule,
     FormsModule,
     OverlayModule,
-    StoreModule.forRoot({people: peopleReducer}),
-    EffectsModule.forRoot([PeopleEffects])
+    StoreModule.forRoot({people: peopleReducer, feedback: feedbackReducer}),
+    EffectsModule.forRoot([PeopleEffects, FeedbackEffects])
   ],
   providers: [PeopleService, FeedbackService],
   entryComponents: [PeopleComponent, PeopleAdministrationComponent],

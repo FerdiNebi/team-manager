@@ -44,6 +44,9 @@ namespace TeamManager.FeedbackService
                 app.UseHsts();
             }
 
+            app.UseCors(options =>
+                            options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+                        );
             // app.UseHttpsRedirection();
             app.UseMvc();
         }
