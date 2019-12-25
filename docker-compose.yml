@@ -31,6 +31,24 @@ services:
       - team-manager-network
     depends_on:
       - db
+  feedback:
+    container_name: FeedbackService
+    build:
+      context: ./TeamManager.FeedbackService/
+      dockerfile: Dockerfile
+    restart: on-failure
+    ports:
+      - "5002:5002"
+    volumes:
+      - ./TeamManager.FeedbackService:/app
+    environment:
+      - 'ConnectionString:TeamManager=server=db,1433;database=TeamManager;User Id=sa;Password=sa12345!;MultipleActiveResultSets=True'
+      - 'ASPNETCORE_URLS=http://*:5002'
+      - 'DOTNET_USE_POLLING_FILE_WATCHER=1'
+    networks:
+      - team-manager-network
+    depends_on:
+      - db
   ui:
     container_name: UI
     build:      

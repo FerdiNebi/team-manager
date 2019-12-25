@@ -1,21 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using TeamManager.PeopleService.Data;
-using TeamManager.PeopleService.Models;
-using TeamManager.PeopleService.Services;
+using TeamManager.FeedbackService.Data;
+using TeamManager.FeedbackService.Services;
 
-namespace TeamManager.PeopleService
+namespace TeamManager.FeedbackService
 {
     public class Startup
     {
@@ -29,12 +21,14 @@ namespace TeamManager.PeopleService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<PeopleServiceContext>(opt => opt.UseSqlServer(Configuration["ConnectionString:TeamManager"]));
+            services.AddDbContext<FeedbackContext>(opt => opt.UseSqlServer(Configuration["ConnectionString:TeamManager"]));
             services.AddCors();
-            services.AddMvc(setupAction =>{
+            services.AddMvc(setupAction =>
+            {
                 setupAction.ReturnHttpNotAcceptable = true;
             }).AddXmlDataContractSerializerFormatters().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.Add(new ServiceDescriptor(typeof(IPeopleService), typeof(TeamManager.PeopleService.Services.PeopleService), ServiceLifetime.Transient));
+
+            services.AddScoped<IFeedbackService, TeamManager.FeedbackService.Services.FeedbackService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,9 +45,6 @@ namespace TeamManager.PeopleService
             }
 
             // app.UseHttpsRedirection();
-            app.UseCors(options =>
-                options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
-            );
             app.UseMvc();
         }
     }
