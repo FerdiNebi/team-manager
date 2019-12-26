@@ -6,9 +6,10 @@ import { Feedback } from 'src/app/feedback/feedback';
  * enum object for all of this group's action types.
  */
 export enum FeedbackActionTypes {
-    Get = '[Feedback] Get',
-    GetSuccess = '[Feedback] GetSuccess',
-    Add = '[Feedback] Add'
+    GetFeedback = '[Feedback] Get',
+    GetFeedbackSuccess = '[Feedback] GetSuccess',
+    AddFeedback = '[Feedback] Add',
+    AddFeedbackSuccess = '[Feedbac] AddSuccess'
 };
 
 /**
@@ -16,20 +17,26 @@ export enum FeedbackActionTypes {
  * payload. Expressing actions as classes enables powerful 
  * type checking in reducer functions.
  */
-export class Get implements Action {
-    readonly type = FeedbackActionTypes.Get;
+export class GetFeedback implements Action {
+    readonly type = FeedbackActionTypes.GetFeedback;
 
     constructor(public payload: string) { }
 }
 
-export class GetSuccess implements Action {
-    readonly type = FeedbackActionTypes.GetSuccess;
+export class GetFeedbackSuccess implements Action {
+    readonly type = FeedbackActionTypes.GetFeedbackSuccess;
 
     constructor(public payload: Feedback[]) { }
 }
 
-export class Add implements Action {
-    readonly type = FeedbackActionTypes.Add;
+export class AddFeedback implements Action {
+    readonly type = FeedbackActionTypes.AddFeedback;
+
+    constructor(public payload: Feedback) { }
+}
+
+export class AddFeedbackSuccess implements Action {
+    readonly type = FeedbackActionTypes.AddFeedbackSuccess;
 
     constructor(public payload: Feedback) { }
 }
@@ -39,6 +46,7 @@ export class Add implements Action {
  * so that reducers can easily compose action types
  */
 export type FeedbackActions
-                        = Get
-                        | Add
-                        | GetSuccess;
+    = GetFeedback
+    | AddFeedback
+    | GetFeedbackSuccess
+    | AddFeedbackSuccess;

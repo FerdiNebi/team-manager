@@ -3,14 +3,14 @@
 <form #addFeedbackForm="ngForm" (ngSubmit)="addFeedback(addFeedbackForm.form)">
   <div class="form-row">
     <div class="form-group col-md-8 row">
-      <label for="from" class="col-sm-2 col-form-label">From</label>
-      <div class="col-sm-10">
+      <div class="col-sm-8">
         <input
           type="text"
           [(ngModel)]="feedbackItem.from"
           name="from"
           class="form-control"
           id="from"
+          placeholder="From"
         />
       </div>
     </div>
@@ -33,13 +33,14 @@
         id="content"
         rows="10"
         style="resize:none"
+        required
       ></textarea>
     </div>
   </div>
 
   <div class="form-row mt-3">
     <div class="form-group col-md-12">
-      <button type="submit" class="btn btn-success">Add</button>
+      <button type="submit" class="btn btn-success" [disabled]="!addFeedbackForm.form.valid || creating">Add</button>
       <button class="btn btn-link" (click)="cancel()">Cancel</button>
     </div>
   </div>
