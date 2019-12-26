@@ -1,5 +1,5 @@
 .legend {
-  font-size: 0.8em;  
+  font-size: 0.8em;
   float: right;
 
   .square-blue {
@@ -10,3 +10,8 @@
     color: red;
   }
 }
+
+::ng-deep .tm-modal-dialog-body {
+  width: 40%;
+}
+

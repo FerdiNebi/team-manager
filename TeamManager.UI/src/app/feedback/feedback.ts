@@ -5,5 +5,16 @@ export interface Feedback {
     from?: string;
     createdOn?: Date;
     content?: string;
-    feedbackType?: number;
+    feedbackType?: FeedbackType;
+}
+
+export interface AddFeedbackModel{
+    date: Date,
+    feedbackType: FeedbackType,
+    personId: string
+}
+
+export enum FeedbackType {
+    Feedback,
+    OneOnOne
 }

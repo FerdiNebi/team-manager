@@ -18,7 +18,7 @@
     </div>
 </div>
 
-<modal-dialog id='{{deleteConfirmationDialogName}}' *ngIf="personToDelete">
+<modal-dialog [id]='deleteConfirmationDialogName' *ngIf="personToDelete">
     <p>Are you sure you want to delete {{personToDelete.name}}</p>
     <button type="button" class="btn btn-danger" (click)="confirmDeletePerson()">Delete</button>
     <button type="button" class="btn btn-link" (click)="cancel()">Cancel</button>

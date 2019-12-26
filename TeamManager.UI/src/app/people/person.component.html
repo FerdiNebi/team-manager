@@ -26,3 +26,12 @@
     <div><i class="far fa-square square-red"></i> One-on-one</div>
   </div>
 </div>
+
+<modal-dialog [id]="addFeedbackDialogName">
+  <add-feedback
+    *ngIf="addFeedbackModel"
+    [addFeedbackModel]="addFeedbackModel"
+    (completed)="addFeedbackCompleted($event)"
+    [title]="addActionName"
+  ></add-feedback>
+</modal-dialog>

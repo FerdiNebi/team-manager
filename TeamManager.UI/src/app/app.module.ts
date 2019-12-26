@@ -21,6 +21,7 @@ import { ModalDialogComponent } from './shared/modal-dialog/modal-dialog.compone
 import { PersonComponent } from './people/person.component';
 import { FeedbackEffects } from './store/effects/feedback.effects';
 import { feedbackReducer } from './store/reducers/feedback.reducers';
+import { AddFeedbackComponent } from './feedback/add-feedback/add-feedback.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { feedbackReducer } from './store/reducers/feedback.reducers';
     CalendarComponent,
     PeopleAdministrationComponent,
     PeopleDeleteComponent,
-    ModalDialogComponent
+    ModalDialogComponent,
+    AddFeedbackComponent
   ],
   imports: [
     BrowserModule,
