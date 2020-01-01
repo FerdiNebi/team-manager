@@ -1,17 +1,26 @@
 .legend {
-  font-size: 0.8em;
-  float: right;
-
-  .square-blue {
-    color: blue;
-  }
-
-  .square-red {
-    color: red;
-  }
+    font-size: 0.8em;
+    float: right;
+    .square-blue {
+        color: blue;
+    }
+    .square-red {
+        color: red;
+    }
 }
 
-::ng-deep .tm-modal-dialog-body {
-  width: 40%;
+ ::ng-deep .tm-modal-dialog-body {
+    width: 40%;
 }
 
+.person-name {
+    font-size: 1.5em;
+    font-weight: 400;
+    font-family: cursive;
+    margin-bottom: 20px;
+}
+
+.btn {
+    width: 64.5px;
+    height: 38px;
+}

@@ -1,47 +1,30 @@
 <h1 *ngIf="title">{{ title }}</h1>
 
 <form #addFeedbackForm="ngForm" (ngSubmit)="addFeedback(addFeedbackForm.form)">
-  <div class="form-row">
-    <div class="form-group col-md-8 row">
-      <div class="col-sm-8">
-        <input
-          type="text"
-          [(ngModel)]="feedbackItem.from"
-          name="from"
-          class="form-control"
-          id="from"
-          placeholder="From"
-        />
-      </div>
+    <div class="form-row">
+        <div class="form-group col-md-8 row">
+            <div class="col-sm-8">
+                <input type="text" [(ngModel)]="feedbackItem.from" name="from" class="form-control" id="from" placeholder="From" />
+            </div>
+        </div>
+
+        <div class="form-group col-md-4">
+            <div class="float-right">
+                <label for="alterEgo">Date:</label> {{ feedbackItem.createdOn | date: "mediumDate" }}
+            </div>
+        </div>
     </div>
 
-    <div class="form-group col-md-4">
-      <div class="float-right">
-        <label for="alterEgo">Date:</label>
-        {{ feedbackItem.createdOn | date: "mediumDate" }}
-      </div>
+    <div class="form-row mt-3">
+        <div class="form-group col-md-12 mx-auto">
+            <textarea placeholder="Content" [(ngModel)]="feedbackItem.content" name="content" class="form-control" id="content" rows="10" style="resize:none" required></textarea>
+        </div>
     </div>
-  </div>
 
-  <div class="form-row mt-3">
-    <div class="form-group col-md-12 mx-auto">
-      <textarea
-        placeholder="Content"
-        [(ngModel)]="feedbackItem.content"
-        name="content"
-        class="form-control"
-        id="content"
-        rows="10"
-        style="resize:none"
-        required
-      ></textarea>
+    <div class="form-row mt-3">
+        <div class="form-group col-md-12">
+            <button type="submit" class="btn btn-primary" [disabled]="!addFeedbackForm.form.valid || creating">Add</button>
+            <button class="btn btn-link" (click)="cancel()">Cancel</button>
+        </div>
     </div>
-  </div>
-
-  <div class="form-row mt-3">
-    <div class="form-group col-md-12">
-      <button type="submit" class="btn btn-success" [disabled]="!addFeedbackForm.form.valid || creating">Add</button>
-      <button class="btn btn-link" (click)="cancel()">Cancel</button>
-    </div>
-  </div>
 </form>

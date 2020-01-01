@@ -8,6 +8,8 @@ import { GetFeedback } from '../store/actions/feedback.actions';
 import { ModalDialogService } from '../services/modal-dialog.service';
 
 declare var $: any
+const CALENDAR_TAB_NAME = "calendar";
+const FEEDBACK_TAB_NAME = "feedback";
 
 @Component({
     selector: 'person',
@@ -30,6 +32,9 @@ export class PersonComponent implements OnInit, OnDestroy {
     addFeedbackDialogName: string;
     addFeedbackModel: AddFeedbackModel;
     addActionName: string;
+    calendarInitialized: boolean;
+    detailsVisible: boolean;
+    currentTab: string = CALENDAR_TAB_NAME;
 
     calendarContextMenuActions = ['Add feedback', 'Add one-on-one'];
     private subscriptions: Subscription[] = [];
@@ -63,9 +68,9 @@ export class PersonComponent implements OnInit, OnDestroy {
         this.addFeedbackModel = null;
     }
 
-    showCalendar(person) {
-        person.showCalendar = true;
-        person.calendarInitialized = true;
+    showDetails() {
+        this.detailsVisible = true;
+        this.calendarInitialized = true;
     }
 
     dayRendered(e) {
@@ -86,6 +91,14 @@ export class PersonComponent implements OnInit, OnDestroy {
 
         const subscription = this.feedback$.subscribe(updateCalendarFunction());
         this.subscriptions.push(subscription);
+    }
+
+    isCalendarTabActive() {
+        return this.currentTab === CALENDAR_TAB_NAME;
+    }
+
+    isFeedbackTabActive() {
+        return this.currentTab === FEEDBACK_TAB_NAME;
     }
 
     private isSameDay(firstDate: Date, secondDate: Date) {

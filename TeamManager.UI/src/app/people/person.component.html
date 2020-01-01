@@ -1,37 +1,34 @@
-{{ person.name }}
-<button
-  type="button"
-  class="btn btn-primary float-right"
-  (click)="showCalendar(person)"
-  *ngIf="!person.showCalendar"
->
-  Show Calendar
-</button>
-<div [hidden]="!person.showCalendar" *ngIf="person.calendarInitialized">
-  <button
-    type="button"
-    class="btn btn-primary float-right"
-    (click)="person.showCalendar = false"
-  >
-    Hide Calendar
-  </button>
-  <calendar
-    [person]="person"
-    [contextMenuActions]="calendarContextMenuActions"
-    (contextMenuActionClicked)="onContextMenuActionClicked($event)"
-    (dayRendered)="dayRendered($event)"
-  ></calendar>
-  <div class="legend">
-    <div><i class="far fa-square square-blue"></i> Feedback</div>
-    <div><i class="far fa-square square-red"></i> One-on-one</div>
-  </div>
+<div>
+    <div class="col-md-1 float-right">
+        <button *ngIf="!detailsVisible" type="button" class="btn btn-primary" (click)="showDetails()">
+            Show
+        </button>
+        <button *ngIf="detailsVisible" type="button" class="btn btn-primary" (click)="detailsVisible = false">
+            Hide
+        </button>
+    </div>
+    <div class=col-md-11>
+        <h1 class="person-name">{{ person.name }}</h1>
+        <div [hidden]="!detailsVisible">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link cursor-pointer" [ngClass]="{ 'active': isCalendarTabActive() }" (click)="currentTab = 'calendar'">Calendar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link cursor-pointer" [ngClass]="{ 'active': isFeedbackTabActive() }" (click)="currentTab = 'feedback'">Feedback</a>
+                </li>
+            </ul>
+            <div [hidden]="!isCalendarTabActive()">
+                <calendar *ngIf="calendarInitialized" [person]="person" [contextMenuActions]="calendarContextMenuActions" (contextMenuActionClicked)="onContextMenuActionClicked($event)" (dayRendered)="dayRendered($event)"></calendar>
+                <div class="legend">
+                    <div><i class="far fa-square square-blue"></i> Feedback</div>
+                    <div><i class="far fa-square square-red"></i> One-on-one</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <modal-dialog [id]="addFeedbackDialogName">
-  <add-feedback
-    *ngIf="addFeedbackModel"
-    [addFeedbackModel]="addFeedbackModel"
-    (completed)="addFeedbackCompleted($event)"
-    [title]="addActionName"
-  ></add-feedback>
+    <add-feedback *ngIf="addFeedbackModel" [addFeedbackModel]="addFeedbackModel" (completed)="addFeedbackCompleted($event)" [title]="addActionName"></add-feedback>
 </modal-dialog>
