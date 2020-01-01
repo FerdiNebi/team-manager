@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, zip } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as feedbackActions from '../actions/feedback.actions';
@@ -10,8 +10,8 @@ import { FeedbackService } from 'src/app/feedback/feedback.service';
 export class FeedbackEffects {
     @Effect() getFeedback$: Observable<feedbackActions.GetFeedbackSuccess> = this.actions$.pipe(
         ofType<feedbackActions.GetFeedback>(feedbackActions.FeedbackActionTypes.GetFeedback),
-        flatMap(a => this.feedbackService.getFeedbackItems(a.payload)),
-        flatMap(feedbackItems => of(new feedbackActions.GetFeedbackSuccess(feedbackItems)))
+        flatMap(a => zip(of(a.payload), this.feedbackService.getFeedbackItems(a.payload))),
+        flatMap(obj => of(new feedbackActions.GetFeedbackSuccess(obj[0], obj[1])))
     );
 
     @Effect() addFeedback$: Observable<feedbackActions.AddFeedbackSuccess> = this.actions$.pipe(

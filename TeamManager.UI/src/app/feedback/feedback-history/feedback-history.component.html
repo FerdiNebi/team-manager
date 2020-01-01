@@ -1,0 +1,15 @@
+<div *ngIf="feedback$ | async as feedbackItems; else loading;">
+    <ul>
+        <li [ngClass]="{'feedback': feedbackItem.feedbackType === 0, 'oneOnOne':  feedbackItem.feedbackType === 1}" *ngFor="let feedbackItem of feedbackItems">
+            <small>{{feedbackItem.createdOn | date: "mediumDate"}} {{feedbackItem.from}}:</small>
+            <div class="message">{{feedbackItem.content}}</div>
+        </li>
+    </ul>
+    <div *ngIf="feedbackItems?.length === 0" class="no-items-created">
+        No feedback created yet
+    </div>
+</div>
+
+<ng-template #loading>
+    Loading...
+</ng-template>

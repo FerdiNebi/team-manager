@@ -26,7 +26,7 @@ export class GetFeedback implements Action {
 export class GetFeedbackSuccess implements Action {
     readonly type = FeedbackActionTypes.GetFeedbackSuccess;
 
-    constructor(public payload: Feedback[]) { }
+    constructor(public personId: string, public payload: Feedback[]) { }
 }
 
 export class AddFeedback implements Action {

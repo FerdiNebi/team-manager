@@ -16,6 +16,7 @@ namespace TeamManager.FeedbackService.Services
         {
             this.context = context;
         }
+
         public async Task<Feedback> CreateAsync(Feedback feedback)
         {
             this.context.Add(feedback);
@@ -44,7 +45,7 @@ namespace TeamManager.FeedbackService.Services
 
         public async Task<IEnumerable<Feedback>> GetAllAsync(Guid personId)
         {
-            return await this.context.Feedbacks.Where(f => f.PersonId == personId).AsNoTracking().ToListAsync();
+            return await this.context.Feedbacks.Where(f => f.PersonId == personId).OrderBy(f => f.CreatedOn).AsNoTracking().ToListAsync();
         }
 
         public async Task<Feedback> UpdateAsync(Feedback feedback)

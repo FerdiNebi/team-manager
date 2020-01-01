@@ -68,9 +68,13 @@ export class PersonComponent implements OnInit, OnDestroy {
         this.addFeedbackModel = null;
     }
 
-    showDetails() {
-        this.detailsVisible = true;
-        this.calendarInitialized = true;
+    toggleDetails() {
+        if (!this.detailsVisible) {
+            this.detailsVisible = true;
+            this.calendarInitialized = true;
+        } else {
+            this.detailsVisible = false;
+        }
     }
 
     dayRendered(e) {

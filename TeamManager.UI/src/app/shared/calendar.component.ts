@@ -54,8 +54,13 @@ export class CalendarComponent implements OnInit {
                     scrollStrategy: that.overlay.scrollStrategies.close()
                 });
 
+                // Fix timezone issue
+                const currentDate = new Date();
+                const clickedDate = new Date(e.date.getTime());
+                clickedDate.setHours(currentDate.getHours());
+
                 that.overlayRef.attach(new TemplatePortal(that.contextMenu, that.viewContainerRef, {
-                    $implicit: { person: that.person, date: e.date }
+                    $implicit: { person: that.person, date: clickedDate }
                 }));
 
                 that.subscription = fromEvent<MouseEvent>(document, 'click')

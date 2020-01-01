@@ -1,14 +1,14 @@
 <div>
     <div class="col-md-1 float-right">
-        <button *ngIf="!detailsVisible" type="button" class="btn btn-primary" (click)="showDetails()">
+        <button *ngIf="!detailsVisible" type="button" class="btn btn-primary" (click)="toggleDetails()">
             Show
         </button>
-        <button *ngIf="detailsVisible" type="button" class="btn btn-primary" (click)="detailsVisible = false">
+        <button *ngIf="detailsVisible" type="button" class="btn btn-primary" (click)="toggleDetails()">
             Hide
         </button>
     </div>
     <div class=col-md-11>
-        <h1 class="person-name">{{ person.name }}</h1>
+        <h1 class="person-name cursor-pointer" (click)="toggleDetails()">{{ person.name }}</h1>
         <div [hidden]="!detailsVisible">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
@@ -18,12 +18,15 @@
                     <a class="nav-link cursor-pointer" [ngClass]="{ 'active': isFeedbackTabActive() }" (click)="currentTab = 'feedback'">Feedback</a>
                 </li>
             </ul>
-            <div [hidden]="!isCalendarTabActive()">
+            <div [hidden]="!isCalendarTabActive()" class="details-container scrollbar">
                 <calendar *ngIf="calendarInitialized" [person]="person" [contextMenuActions]="calendarContextMenuActions" (contextMenuActionClicked)="onContextMenuActionClicked($event)" (dayRendered)="dayRendered($event)"></calendar>
                 <div class="legend">
                     <div><i class="far fa-square square-blue"></i> Feedback</div>
                     <div><i class="far fa-square square-red"></i> One-on-one</div>
                 </div>
+            </div>
+            <div [hidden]="!isFeedbackTabActive()" class="details-container scrollbar">
+                <feedback-history [person]="person"></feedback-history>
             </div>
         </div>
     </div>

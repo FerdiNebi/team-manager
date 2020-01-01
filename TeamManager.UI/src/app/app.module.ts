@@ -22,6 +22,7 @@ import { PersonComponent } from './people/person.component';
 import { FeedbackEffects } from './store/effects/feedback.effects';
 import { feedbackReducer } from './store/reducers/feedback.reducers';
 import { AddFeedbackComponent } from './feedback/add-feedback/add-feedback.component';
+import { FeedbackHistoryComponent } from './feedback/feedback-history/feedback-history.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { AddFeedbackComponent } from './feedback/add-feedback/add-feedback.compo
     PeopleAdministrationComponent,
     PeopleDeleteComponent,
     ModalDialogComponent,
-    AddFeedbackComponent
+    AddFeedbackComponent,
+    FeedbackHistoryComponent
   ],
   imports: [
     BrowserModule,
