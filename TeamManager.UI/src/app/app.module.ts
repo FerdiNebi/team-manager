@@ -23,6 +23,7 @@ import { FeedbackEffects } from './store/effects/feedback.effects';
 import { feedbackReducer } from './store/reducers/feedback.reducers';
 import { AddFeedbackComponent } from './feedback/add-feedback/add-feedback.component';
 import { FeedbackHistoryComponent } from './feedback/feedback-history/feedback-history.component';
+import { ScrollToBottomDirective } from './shared/scroll-to-bottom.directive';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { FeedbackHistoryComponent } from './feedback/feedback-history/feedback-h
     PeopleDeleteComponent,
     ModalDialogComponent,
     AddFeedbackComponent,
-    FeedbackHistoryComponent
+    FeedbackHistoryComponent,
+    ScrollToBottomDirective
   ],
   imports: [
     BrowserModule,

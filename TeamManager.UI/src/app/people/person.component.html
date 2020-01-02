@@ -12,10 +12,10 @@
         <div [hidden]="!detailsVisible">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link cursor-pointer" [ngClass]="{ 'active': isCalendarTabActive() }" (click)="currentTab = 'calendar'">Calendar</a>
+                    <a class="nav-link cursor-pointer" [ngClass]="{ 'active': isCalendarTabActive() }" (click)="changeTab('calendar')">Calendar</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link cursor-pointer" [ngClass]="{ 'active': isFeedbackTabActive() }" (click)="currentTab = 'feedback'">Feedback</a>
+                    <a class="nav-link cursor-pointer" [ngClass]="{ 'active': isFeedbackTabActive() }" (click)="changeTab('feedback')">Feedback</a>
                 </li>
             </ul>
             <div [hidden]="!isCalendarTabActive()" class="details-container scrollbar">
@@ -25,7 +25,7 @@
                     <div><i class="far fa-square square-red"></i> One-on-one</div>
                 </div>
             </div>
-            <div [hidden]="!isFeedbackTabActive()" class="details-container scrollbar">
+            <div [hidden]="!isFeedbackTabActive()" class="details-container scrollbar" [scrollToBottom]="isFeedbackTabActive()">
                 <feedback-history [person]="person"></feedback-history>
             </div>
         </div>

@@ -1,6 +1,7 @@
 .legend {
     font-size: 0.8em;
-    float: right;
+    right: 10px;
+    position: absolute;
     .square-blue {
         color: blue;
     }
@@ -26,10 +27,16 @@
 }
 
 .details-container {
+    position: relative;
     margin-top: 10px;
-    min-height: 500px;
-    max-height: 800px;
+    height: 710px;
     overflow-y: auto;
+}
+
+@media screen and (max-height: 850px) {
+    .details-container {
+        height: 600px;
+    }
 }
 
 .scrollbar::-webkit-scrollbar-track {

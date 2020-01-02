@@ -1,11 +1,12 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ElementRef } from '@angular/core';
 import { IAppState } from '../store/state/app-state';
 import { Person } from './person';
 import { Store, select } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, interval } from 'rxjs';
 import { Feedback, AddFeedbackModel, FeedbackType } from '../feedback/feedback';
 import { GetFeedback } from '../store/actions/feedback.actions';
 import { ModalDialogService } from '../services/modal-dialog.service';
+import { first } from 'rxjs/operators';
 
 declare var $: any
 const CALENDAR_TAB_NAME = "calendar";
@@ -39,7 +40,7 @@ export class PersonComponent implements OnInit, OnDestroy {
     calendarContextMenuActions = ['Add feedback', 'Add one-on-one'];
     private subscriptions: Subscription[] = [];
 
-    constructor(private store: Store<IAppState>, private modalDialogService: ModalDialogService) { }
+    constructor(private store: Store<IAppState>, private modalDialogService: ModalDialogService, private element: ElementRef) { }
 
     ngOnInit(): void {
         this.store.dispatch(new GetFeedback(this.person.id));
@@ -72,6 +73,9 @@ export class PersonComponent implements OnInit, OnDestroy {
         if (!this.detailsVisible) {
             this.detailsVisible = true;
             this.calendarInitialized = true;
+            interval(10).pipe(first()).subscribe(() => {
+                this.element.nativeElement.scrollIntoView(true);
+            });            
         } else {
             this.detailsVisible = false;
         }
@@ -95,6 +99,13 @@ export class PersonComponent implements OnInit, OnDestroy {
 
         const subscription = this.feedback$.subscribe(updateCalendarFunction());
         this.subscriptions.push(subscription);
+    }
+
+    changeTab(tab: string){
+        this.currentTab = tab;
+        interval(10).pipe(first()).subscribe(() => {
+            this.element.nativeElement.scrollIntoView(true);
+        }); 
     }
 
     isCalendarTabActive() {
