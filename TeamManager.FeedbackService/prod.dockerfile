@@ -11,4 +11,4 @@ EXPOSE 443
 
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "TeamManager.PeopleFeedbackServiceService.dll"]
+ENTRYPOINT ["dotnet", "TeamManager.FeedbackService.dll"]

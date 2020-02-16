@@ -18,8 +18,8 @@ export class AddFeedbackComponent implements OnInit {
   @Input() addFeedbackModel: AddFeedbackModel;
   @Output() completed: EventEmitter<boolean> = new EventEmitter<boolean>();
   feedbackItem: Feedback;
+  creating: boolean;
   private subscription: Subscription;
-  private creating: boolean;
 
   constructor(private store: Store<IAppState>, private actions$: Actions) { }
 
