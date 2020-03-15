@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  peopleServiceUrl: "http://localhost:5000/api/people",
-  feedbackServiceUrl: "http://localhost:5002/api/feedback"
+  peopleServiceUrl: "http://localhost:5005/p/people",
+  feedbackServiceUrl: "http://localhost:5005/f/feedback"
 };
 
 /*
