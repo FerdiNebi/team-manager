@@ -6,7 +6,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "feedback",
-          "Port": 5002
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/f/{everything}",
@@ -18,7 +18,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "people",
-          "Port": 5000
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/p/{everything}",

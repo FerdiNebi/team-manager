@@ -37,7 +37,7 @@ services:
       - ./TeamManager.PeopleService:/app
     environment:
       - 'ConnectionString:TeamManager=server=db,1433;database=TeamManager;User Id=sa;Password=sa12345!;MultipleActiveResultSets=True'
-      - 'ASPNETCORE_URLS=http://*:5000'
+      - 'ASPNETCORE_URLS=http://*:80'
       - 'DOTNET_USE_POLLING_FILE_WATCHER=1'
     depends_on:
       - db
@@ -51,7 +51,7 @@ services:
       - ./TeamManager.FeedbackService:/app
     environment:
       - 'ConnectionString:TeamManager=server=db,1433;database=TeamManager;User Id=sa;Password=sa12345!;MultipleActiveResultSets=True'
-      - 'ASPNETCORE_URLS=http://*:5002'
+      - 'ASPNETCORE_URLS=http://*:80'
       - 'DOTNET_USE_POLLING_FILE_WATCHER=1'
     depends_on:
       - db
