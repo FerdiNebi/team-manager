@@ -10,7 +10,11 @@
         }
       ],
       "UpstreamPathTemplate": "/f/{everything}",
-      "UpstreamHttpMethod": ["GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"]
+      "UpstreamHttpMethod": ["GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/api/{everything}",
@@ -22,7 +26,11 @@
         }
       ],
       "UpstreamPathTemplate": "/p/{everything}",
-      "UpstreamHttpMethod": ["GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"]
+      "UpstreamHttpMethod": ["GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      }
     }
   ],
   "GlobalConfiguration": {

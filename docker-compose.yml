@@ -22,7 +22,7 @@ services:
     volumes:
       - ./TeamManager.ApiGateway:/app
     environment:
-      - 'ConnectionString:TeamManager=server=db,1433;database=TeamManager;User Id=sa;Password=sa12345!;MultipleActiveResultSets=True'
+      - 'ConnectionStrings:TeamManager=server=db,1433;database=TeamManager;User Id=sa;Password=sa12345!;MultipleActiveResultSets=True'
       - 'ASPNETCORE_URLS=http://*:5005'
       - 'DOTNET_USE_POLLING_FILE_WATCHER=1'
     depends_on:
@@ -36,7 +36,7 @@ services:
     volumes:
       - ./TeamManager.PeopleService:/app
     environment:
-      - 'ConnectionString:TeamManager=server=db,1433;database=TeamManager;User Id=sa;Password=sa12345!;MultipleActiveResultSets=True'
+      - 'ConnectionStrings:TeamManager=server=db,1433;database=TeamManager;User Id=sa;Password=sa12345!;MultipleActiveResultSets=True'
       - 'ASPNETCORE_URLS=http://*:80'
       - 'DOTNET_USE_POLLING_FILE_WATCHER=1'
     depends_on:
@@ -50,7 +50,7 @@ services:
     volumes:
       - ./TeamManager.FeedbackService:/app
     environment:
-      - 'ConnectionString:TeamManager=server=db,1433;database=TeamManager;User Id=sa;Password=sa12345!;MultipleActiveResultSets=True'
+      - 'ConnectionStrings:TeamManager=server=db,1433;database=TeamManager;User Id=sa;Password=sa12345!;MultipleActiveResultSets=True'
       - 'ASPNETCORE_URLS=http://*:80'
       - 'DOTNET_USE_POLLING_FILE_WATCHER=1'
     depends_on:

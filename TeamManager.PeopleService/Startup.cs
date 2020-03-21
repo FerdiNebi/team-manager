@@ -29,7 +29,7 @@ namespace TeamManager.PeopleService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<PeopleServiceContext>(opt => opt.UseSqlServer(Configuration["ConnectionString:TeamManager"]));
+            services.AddDbContext<PeopleServiceContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("TeamManager")));
             services.AddCors();
             services.AddMvc(setupAction =>{
                 setupAction.ReturnHttpNotAcceptable = true;

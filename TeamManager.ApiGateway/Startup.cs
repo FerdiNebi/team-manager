@@ -29,6 +29,35 @@ namespace TeamManager.ApiGateway
         {
             services.AddControllers();
             services.AddOcelot(Configuration);
+
+            var identityUrl = Configuration.GetValue<string>("IdentityUrl");
+            var authenticationProviderKey = "IdentityApiKey";
+            services.AddAuthentication()
+                .AddJwtBearer(authenticationProviderKey, x =>
+                {
+                    x.Authority = identityUrl;
+                    x.RequireHttpsMetadata = false;
+                    x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                    {
+                        ValidAudiences = new[] { "people", "feedback"}
+                    };
+                    x.Events = new Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents()
+                    {
+                        OnAuthenticationFailed = async ctx =>
+                        {
+                            int i = 0;
+                        },
+                        OnTokenValidated = async ctx =>
+                        {
+                            int i = 0;
+                        },
+
+                        OnMessageReceived = async ctx =>
+                        {
+                            int i = 0;
+                        }
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
