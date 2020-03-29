@@ -6,6 +6,8 @@ using TeamManager.Identity.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Debug;
 
 namespace TeamManager.Identity
 {
@@ -21,25 +23,31 @@ namespace TeamManager.Identity
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("TeamManager")));
+            // services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("TeamManager")));
 
-            services.AddDefaultIdentity<IdentityUser>(options =>
-            {
-                options.SignIn.RequireConfirmedAccount = false;
-                options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 3;
-                options.Password.RequiredUniqueChars = 1;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-            })
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            // services.AddDefaultIdentity<IdentityUser>(options =>
+            // {
+            //     options.SignIn.RequireConfirmedAccount = false;
+            //     options.Password.RequireDigit = false;
+            //     options.Password.RequiredLength = 3;
+            //     options.Password.RequiredUniqueChars = 1;
+            //     options.Password.RequireLowercase = false;
+            //     options.Password.RequireNonAlphanumeric = false;
+            //     options.Password.RequireUppercase = false;
+            // })
+            //     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
-            {
-                microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ClientId"];
-                microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:ClientSecret"];
-            });
+            // services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
+            // {
+            //     microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ClientId"];
+            //     microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:ClientSecret"];
+            // });
+
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential()
+                .AddTestUsers(Config.GetUsers())
+                .AddInMemoryIdentityResources(Config.GetIdentityResources())
+                .AddInMemoryClients(Config.GetClients());
 
             services.AddRazorPages();
         }
@@ -59,17 +67,13 @@ namespace TeamManager.Identity
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            app.UseIdentityServer();
+
             app.UseStaticFiles();
-
             app.UseRouting();
-
-            app.UseAuthentication();
-            app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}");
             });
         }
     }
