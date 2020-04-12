@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +16,10 @@ using Microsoft.Extensions.Logging;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using TeamManager.ApiGateway.Data;
+using Microsoft.AspNetCore.Authentication.AzureAD.UI;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 
 namespace TeamManager.ApiGateway
 {
@@ -63,22 +68,49 @@ namespace TeamManager.ApiGateway
 
             services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("TeamManager")));
 
-            services.AddDefaultIdentity<IdentityUser>(options =>
-            {
-                options.SignIn.RequireConfirmedAccount = false;
-                options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 3;
-                options.Password.RequiredUniqueChars = 1;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-            })
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            // services.AddDefaultIdentity<IdentityUser>(options =>
+            // {
+            //     options.SignIn.RequireConfirmedAccount = false;
+            //     options.Password.RequireDigit = false;
+            //     options.Password.RequiredLength = 3;
+            //     options.Password.RequiredUniqueChars = 1;
+            //     options.Password.RequireLowercase = false;
+            //     options.Password.RequireNonAlphanumeric = false;
+            //     options.Password.RequireUppercase = false;
+            // })
+            //     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddAuthentication().AddMicrosoftAccount(authenticationProviderKey, microsoftOptions =>
+            // services.AddAuthentication(authenticationProviderKey)
+            // .AddMicrosoftAccount(authenticationProviderKey, microsoftOptions =>
+            // {
+            //     microsoftOptions.ClientId = "7f691190-b6d4-42f9-996f-21c64aa7d1ad";
+            //     microsoftOptions.ClientSecret = "4jpP]j3@LoJGz0@/ELNxNf7upy3MbgSg";
+            // });
+
+            // services.AddAuthentication(AzureADDefaults.JwtBearerAuthenticationScheme)
+            //   .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
+
+            // services.Configure<JwtBearerOptions>(AzureADDefaults.JwtBearerAuthenticationScheme, options =>
+            // {
+            //     // This is a Microsoft identity platform web API.
+            //     options.Authority += "/v2.0";
+
+            //     // The web API accepts as audiences both the Client ID (options.Audience) and api://{ClientID}.
+            //     options.TokenValidationParameters.ValidAudiences = new[]
+            //     {
+            //         options.Audience,
+            //         $"api://{options.Audience}"
+            //     };
+            // });
+
+            services.AddAuthentication(options =>
             {
-                microsoftOptions.ClientId = "7f691190-b6d4-42f9-996f-21c64aa7d1ad";
-                microsoftOptions.ClientSecret = "4jpP]j3@LoJGz0@/ELNxNf7upy3MbgSg";
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = "https://login.microsoftonline.com/1e2cf074-7a96-45fd-8bab-6638448666b3/v2.0/";
+                options.Audience = "7f691190-b6d4-42f9-996f-21c64aa7d1ad";
             });
 
             services.AddCors();

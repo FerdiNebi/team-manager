@@ -12,7 +12,7 @@
       "UpstreamPathTemplate": "/f/{everything}",
       "UpstreamHttpMethod": ["GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"],
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "IdentityApiKey",
+        "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
       }
     },
@@ -28,7 +28,7 @@
       "UpstreamPathTemplate": "/p/{everything}",
       "UpstreamHttpMethod": ["GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"],
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "IdentityApiKey",
+        "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
       }
     }
