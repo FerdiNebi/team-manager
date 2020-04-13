@@ -36,81 +36,35 @@ namespace TeamManager.ApiGateway
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            var authenticationProviderKey = "IdentityApiKey";
-
-            // var identityUrl = Configuration.GetValue<string>("IdentityUrl");
-            // services.AddAuthentication()
-            //     .AddJwtBearer(authenticationProviderKey, x =>
-            //     {
-            //         x.Authority = identityUrl;
-            //         x.RequireHttpsMetadata = false;
-            //         x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
-            //         {
-            //             ValidAudiences = new[] { "people", "feedback"}
-            //         };
-            //         x.Events = new Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents()
-            //         {
-            //             OnAuthenticationFailed = async ctx =>
-            //             {
-            //                 int i = 0;
-            //             },
-            //             OnTokenValidated = async ctx =>
-            //             {
-            //                 int i = 0;
-            //             },
-
-            //             OnMessageReceived = async ctx =>
-            //             {
-            //                 int i = 0;
-            //             }
-            //         };
-            //     });
-
             services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("TeamManager")));
-
-            // services.AddDefaultIdentity<IdentityUser>(options =>
-            // {
-            //     options.SignIn.RequireConfirmedAccount = false;
-            //     options.Password.RequireDigit = false;
-            //     options.Password.RequiredLength = 3;
-            //     options.Password.RequiredUniqueChars = 1;
-            //     options.Password.RequireLowercase = false;
-            //     options.Password.RequireNonAlphanumeric = false;
-            //     options.Password.RequireUppercase = false;
-            // })
-            //     .AddEntityFrameworkStores<ApplicationDbContext>();
-
-            // services.AddAuthentication(authenticationProviderKey)
-            // .AddMicrosoftAccount(authenticationProviderKey, microsoftOptions =>
-            // {
-            //     microsoftOptions.ClientId = "7f691190-b6d4-42f9-996f-21c64aa7d1ad";
-            //     microsoftOptions.ClientSecret = "4jpP]j3@LoJGz0@/ELNxNf7upy3MbgSg";
-            // });
-
-            // services.AddAuthentication(AzureADDefaults.JwtBearerAuthenticationScheme)
-            //   .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
-
-            // services.Configure<JwtBearerOptions>(AzureADDefaults.JwtBearerAuthenticationScheme, options =>
-            // {
-            //     // This is a Microsoft identity platform web API.
-            //     options.Authority += "/v2.0";
-
-            //     // The web API accepts as audiences both the Client ID (options.Audience) and api://{ClientID}.
-            //     options.TokenValidationParameters.ValidAudiences = new[]
-            //     {
-            //         options.Audience,
-            //         $"api://{options.Audience}"
-            //     };
-            // });
 
             services.AddAuthentication(options =>
             {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
+                options.DefaultAuthenticateScheme = AzureADDefaults.JwtBearerAuthenticationScheme;
+                options.DefaultChallengeScheme = AzureADDefaults.JwtBearerAuthenticationScheme;
+            }).AddAzureADBearer(options =>
             {
-                options.Authority = "https://login.microsoftonline.com/1e2cf074-7a96-45fd-8bab-6638448666b3/v2.0/";
-                options.Audience = "7f691190-b6d4-42f9-996f-21c64aa7d1ad";
+                options.Instance = "https://login.microsoftonline.com/";
+                options.ClientId = "7f691190-b6d4-42f9-996f-21c64aa7d1ad";
+                options.TenantId = "common";
+            });
+
+            services.Configure<JwtBearerOptions>(AzureADDefaults.JwtBearerAuthenticationScheme, options =>
+            {
+                // This is a Microsoft identity platform web API.
+                options.Authority += "/v2.0";
+
+                // The web API accepts as audiences both the Client ID (options.Audience) and api://{ClientID}.
+                options.TokenValidationParameters.ValidAudiences = new[]
+                {
+                options.Audience,
+                $"api://{options.Audience}"
+                };
+
+                // Instead of using the default validation (validating against a single tenant,
+                // as we do in line-of-business apps),
+                // we inject our own multitenant validation logic (which even accepts both v1 and v2 tokens).
+                options.TokenValidationParameters.IssuerValidator = AadIssuerValidator.GetIssuerValidator(options.Authority).Validate; ;
             });
 
             services.AddCors();

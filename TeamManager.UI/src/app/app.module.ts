@@ -40,8 +40,8 @@ export function loggerCallback(level, message) {
 }
 
 const protectedResourceMap = new Map<string, string[]>();
-protectedResourceMap.set(environment.peopleServiceUrl, ["api://7f691190-b6d4-42f9-996f-21c64aa7d1ad/access_as_user", "user.read", "openid", "profile"]);
-protectedResourceMap.set(environment.feedbackServiceUrl, ["api://7f691190-b6d4-42f9-996f-21c64aa7d1ad/access_as_user", "user.read", "openid", "profile"]);
+protectedResourceMap.set(environment.peopleServiceUrl, ["https://ferdinebievgmail.onmicrosoft.com/TeamManager/access_as_user", "user.read", "openid", "profile"]);
+protectedResourceMap.set(environment.feedbackServiceUrl, ["https://ferdinebievgmail.onmicrosoft.com/TeamManager/access_as_user", "user.read", "openid", "profile"]);
 
 @NgModule({
   declarations: [
@@ -62,7 +62,7 @@ protectedResourceMap.set(environment.feedbackServiceUrl, ["api://7f691190-b6d4-4
     MsalModule.forRoot({
       auth: {
         clientId: "7f691190-b6d4-42f9-996f-21c64aa7d1ad",
-        authority: "https://login.microsoftonline.com/1e2cf074-7a96-45fd-8bab-6638448666b3/",
+        authority: "https://login.microsoftonline.com/common/",
         validateAuthority: true,
         redirectUri: "http://localhost:4200/",
         postLogoutRedirectUri: "http://localhost:4200/",

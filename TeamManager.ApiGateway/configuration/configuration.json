@@ -19,7 +19,7 @@
         "PATCH"
       ],
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
+        "AuthenticationProviderKey": "AzureADBearer",
         "AllowedScopes": []
       },
       "AddHeadersToRequest": {
@@ -45,7 +45,7 @@
         "PATCH"
       ],
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
+        "AuthenticationProviderKey": "AzureADBearer",
         "AllowedScopes": []
       },
       "AddHeadersToRequest": {
