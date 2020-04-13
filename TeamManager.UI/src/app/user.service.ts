@@ -15,10 +15,12 @@ export class UserService {
           router.navigate(['myProfile']);
         });
     }
+
     public tryToGetUser() {
         if (this.authService.getAccount()) {
             return this.getUser();
         }
+        
         return of(null);
     }
 
@@ -26,5 +28,9 @@ export class UserService {
         return this.http.get<any>(`User/loggedinuser`).pipe(tap(user => {
             this.cachedUser = user;
         }));
+    }
+
+    public getAccount () {
+        return this.authService.getAccount();
     }
 }

@@ -10,10 +10,20 @@
         }
       ],
       "UpstreamPathTemplate": "/f/{everything}",
-      "UpstreamHttpMethod": ["GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"],
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "OPTIONS",
+        "DELETE",
+        "PUT",
+        "PATCH"
+      ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
+      },
+      "AddHeadersToRequest": {
+        "USER_ID": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
       }
     },
     {
@@ -26,10 +36,20 @@
         }
       ],
       "UpstreamPathTemplate": "/p/{everything}",
-      "UpstreamHttpMethod": ["GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"],
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "OPTIONS",
+        "DELETE",
+        "PUT",
+        "PATCH"
+      ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
+      },
+      "AddHeadersToRequest": {
+        "USER_ID": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
       }
     }
   ],

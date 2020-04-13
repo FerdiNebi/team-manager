@@ -29,6 +29,7 @@ import { UserService } from './user.service';
 import { LoginComponent } from './login.component';
 import { Logger } from 'msal';
 import { MsalInterceptor2 } from './custom.interceptor';
+import { environment } from 'src/environments/environment';
 
 export function baseUri() {
   return window.location.protocol + '//' + window.location.host + '/';
@@ -39,9 +40,8 @@ export function loggerCallback(level, message) {
 }
 
 const protectedResourceMap = new Map<string, string[]>();
-protectedResourceMap.set("http://localhost:5005/p/people", ["api://7f691190-b6d4-42f9-996f-21c64aa7d1ad/access_as_user", "user.read", "openid", "profile"]);
-protectedResourceMap.set("http://localhost:5005/f/feedback", ["api://7f691190-b6d4-42f9-996f-21c64aa7d1ad/access_as_user", "user.read", "openid", "profile"]);
-// protectedResourceMap.set("https://localhost:5001/WeatherForecast", ["api://7f691190-b6d4-42f9-996f-21c64aa7d1ad/access_as_user", "user.read", "openid", "profile"]);
+protectedResourceMap.set(environment.peopleServiceUrl, ["api://7f691190-b6d4-42f9-996f-21c64aa7d1ad/access_as_user", "user.read", "openid", "profile"]);
+protectedResourceMap.set(environment.feedbackServiceUrl, ["api://7f691190-b6d4-42f9-996f-21c64aa7d1ad/access_as_user", "user.read", "openid", "profile"]);
 
 @NgModule({
   declarations: [

@@ -66,6 +66,8 @@ services:
       - ./TeamManager.UI/src:/home/app/angular-app/src
     depends_on:
       - db
+      - apigtw
       - people
+      - feedback
 volumes: 
   database: 

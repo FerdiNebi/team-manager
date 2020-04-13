@@ -4,6 +4,16 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
+    {
+        "name": "Docker .NET Core Attach (Preview)",
+        "type": "docker",
+        "request": "attach",
+        "platform": "netCore",
+        "sourceFileMap": {
+            "/src": "${workspaceFolder}"
+        }
+    },
         {
             "name": "Docker .NET Core Launch",
             "type": "docker",
@@ -12,6 +22,27 @@
             "netCore": {
                 "appProject": "${workspaceFolder}/TeamManager.ApiGateway/TeamManager.ApiGateway.csproj"
             }
-        }
+        },
+        {
+            "name": ".NET Core Launch (web)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/TeamManager.PeopleService/bin/Debug/netcoreapp3.1/TeamManager.PeopleService.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/TeamManager.PeopleService",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "^\\s*Now listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/TeamManager.PeopleService/Views"
+            }
+        },
+
     ]
 }

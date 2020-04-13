@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using TeamManager.PeopleService.Models;
 using TeamManager.PeopleService.Services;
 
@@ -14,7 +12,7 @@ namespace TeamManager.PeopleService.Controllers
     public class PeopleController : ControllerBase
     {
         private readonly IPeopleService peopleService;
-
+        
         public PeopleController(IPeopleService _peopleService)
         {
             this.peopleService = _peopleService;

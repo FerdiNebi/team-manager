@@ -7,10 +7,10 @@ import { MsalGuard } from '@azure/msal-angular';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/people', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'people', component: PeopleComponent, canActivate : [MsalGuard]},
-  { path: 'administration', component: PeopleAdministrationComponent}
+  { path: 'administration', component: PeopleAdministrationComponent, canActivate : [MsalGuard]}
 ];
 
 @NgModule({
