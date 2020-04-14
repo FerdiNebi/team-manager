@@ -40,8 +40,8 @@ export function loggerCallback(level, message) {
 }
 
 const protectedResourceMap = new Map<string, string[]>();
-protectedResourceMap.set(environment.peopleServiceUrl, ["https://ferdinebievgmail.onmicrosoft.com/TeamManager/access_as_user", "user.read", "openid", "profile"]);
-protectedResourceMap.set(environment.feedbackServiceUrl, ["https://ferdinebievgmail.onmicrosoft.com/TeamManager/access_as_user", "user.read", "openid", "profile"]);
+protectedResourceMap.set(environment.peopleServiceUrl, ["https://ferdinebievgmail.onmicrosoft.com/TeamManager/access_as_user", "profile"]);
+protectedResourceMap.set(environment.feedbackServiceUrl, ["https://ferdinebievgmail.onmicrosoft.com/TeamManager/access_as_user", "profile"]);
 
 @NgModule({
   declarations: [
@@ -69,7 +69,7 @@ protectedResourceMap.set(environment.feedbackServiceUrl, ["https://ferdinebievgm
         navigateToLoginRequestUrl: true,
       },
       cache: {
-        cacheLocation: "localStorage",
+        cacheLocation: "sessionStorage",
         storeAuthStateInCookie: true, // set to true for IE 11
       },
       framework: {
