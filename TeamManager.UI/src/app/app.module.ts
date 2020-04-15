@@ -27,21 +27,9 @@ import { FeedbackHistoryComponent } from './feedback/feedback-history/feedback-h
 import { ScrollToBottomDirective } from './shared/scroll-to-bottom.directive';
 import { UserService } from './user.service';
 import { LoginComponent } from './login.component';
-import { Logger } from 'msal';
 import { MsalInterceptor2 } from './custom.interceptor';
 import { environment } from 'src/environments/environment';
-
-export function baseUri() {
-  return window.location.protocol + '//' + window.location.host + '/';
-}
-
-export function loggerCallback(level, message) {
-  console.log('client logging' + message);
-}
-
-const protectedResourceMap = new Map<string, string[]>();
-protectedResourceMap.set(environment.peopleServiceUrl, ["https://ferdinebievgmail.onmicrosoft.com/TeamManager/access_as_user", "profile"]);
-protectedResourceMap.set(environment.feedbackServiceUrl, ["https://ferdinebievgmail.onmicrosoft.com/TeamManager/access_as_user", "profile"]);
+import { protectedResourceMap } from './utils';
 
 @NgModule({
   declarations: [
@@ -64,8 +52,8 @@ protectedResourceMap.set(environment.feedbackServiceUrl, ["https://ferdinebievgm
         clientId: "7f691190-b6d4-42f9-996f-21c64aa7d1ad",
         authority: "https://login.microsoftonline.com/common/",
         validateAuthority: true,
-        redirectUri: "http://localhost:4200/",
-        postLogoutRedirectUri: "http://localhost:4200/",
+        redirectUri: environment.appUrl,
+        postLogoutRedirectUri: environment.appUrl,
         navigateToLoginRequestUrl: true,
       },
       cache: {
@@ -74,9 +62,6 @@ protectedResourceMap.set(environment.feedbackServiceUrl, ["https://ferdinebievgm
       },
       framework: {
         protectedResourceMap: protectedResourceMap
-      },
-      system: {
-        logger: new Logger(loggerCallback)
       }
     }, {
       popUp: true,

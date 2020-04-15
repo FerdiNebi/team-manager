@@ -5,7 +5,8 @@
 export const environment = { 
   production: false,
   peopleServiceUrl: "http://localhost:5005/p/people",
-  feedbackServiceUrl: "http://localhost:5005/f/feedback"
+  feedbackServiceUrl: "http://localhost:5005/f/feedback",
+  appUrl: "http://localhost:4200/"
 };
 
 /*
