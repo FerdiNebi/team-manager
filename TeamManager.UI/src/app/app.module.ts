@@ -54,17 +54,18 @@ import { protectedResourceMap } from './utils';
         validateAuthority: true,
         redirectUri: environment.appUrl,
         postLogoutRedirectUri: environment.appUrl,
-        navigateToLoginRequestUrl: true,
+        navigateToLoginRequestUrl: false,
       },
       cache: {
         cacheLocation: "sessionStorage",
         storeAuthStateInCookie: true, // set to true for IE 11
       },
       framework: {
+        isAngular: true,
         protectedResourceMap: protectedResourceMap
       }
     }, {
-      popUp: true,
+      popUp: false,
       consentScopes: ["user.read", "openid", "profile"],
       extraQueryParameters: {}
     }),
