@@ -75,7 +75,7 @@ export class WorkdayImportComponent implements OnInit {
     let batchFeedback: Feedback[] = [];
     for (let i = 0; i < this.feedbackList.length; i++) {
       const feedback = this.feedbackList[i];
-      if (feedback["About"] == person.name && feedback["Feedback"]) {
+      if (feedback["About"] == person.name && feedback["Feedback"] && !this.isPoll(feedback["Question"])) {
         const dateObj = XLSX.SSF.parse_date_code(feedback["Date"]);
 
         const feedbackItem = {
@@ -100,5 +100,10 @@ export class WorkdayImportComponent implements OnInit {
     if (batchFeedback.length > 0) {
       this.store.dispatch(new AddBatchFeedback(batchFeedback));
     }
+  }
+
+  private isPoll(question: string): boolean {
+    const isPoll = question && question.indexOf("1. ") !== -1 && question.indexOf("2. ") !== -1 && question.indexOf("3. ") !== -1;
+    return isPoll;
   }
 }
