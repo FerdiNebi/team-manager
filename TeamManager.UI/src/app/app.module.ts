@@ -25,11 +25,10 @@ import { feedbackReducer } from './store/reducers/feedback.reducers';
 import { AddFeedbackComponent } from './feedback/add-feedback/add-feedback.component';
 import { FeedbackHistoryComponent } from './feedback/feedback-history/feedback-history.component';
 import { ScrollToBottomDirective } from './shared/scroll-to-bottom.directive';
-import { UserService } from './user.service';
 import { LoginComponent } from './login.component';
 import { MsalInterceptor2 } from './custom.interceptor';
 import { environment } from 'src/environments/environment';
-import { protectedResourceMap } from './utils';
+import { UserService } from './user.service';
 
 @NgModule({
   declarations: [
@@ -51,23 +50,22 @@ import { protectedResourceMap } from './utils';
       auth: {
         clientId: "7f691190-b6d4-42f9-996f-21c64aa7d1ad",
         authority: "https://login.microsoftonline.com/common/",
-        validateAuthority: true,
         redirectUri: environment.appUrl,
         postLogoutRedirectUri: environment.appUrl,
-        navigateToLoginRequestUrl: false,
       },
       cache: {
         cacheLocation: "sessionStorage",
         storeAuthStateInCookie: true, // set to true for IE 11
-      },
-      framework: {
-        isAngular: true,
-        protectedResourceMap: protectedResourceMap
       }
     }, {
       popUp: false,
-      consentScopes: ["user.read", "openid", "profile"],
-      extraQueryParameters: {}
+      consentScopes: ["https://ferdinebievgmail.onmicrosoft.com/TeamManager/access_as_user", "profile"],
+      extraQueryParameters: {},
+      unprotectedResources: [],
+      protectedResourceMap: [
+        [environment.peopleServiceUrl, ["https://ferdinebievgmail.onmicrosoft.com/TeamManager/access_as_user"]],
+        [environment.feedbackServiceUrl, ["https://ferdinebievgmail.onmicrosoft.com/TeamManager/access_as_user"]]
+      ]
     }),
     BrowserModule,
     AppRoutingModule,
@@ -77,7 +75,7 @@ import { protectedResourceMap } from './utils';
     StoreModule.forRoot({ people: peopleReducer, feedback: feedbackReducer }),
     EffectsModule.forRoot([PeopleEffects, FeedbackEffects])
   ],
-  providers: [PeopleService, FeedbackService, { provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor2, multi: true }, UserService],
+  providers: [PeopleService, FeedbackService, { provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true }, UserService],
   entryComponents: [PeopleComponent, PeopleAdministrationComponent, LoginComponent],
   bootstrap: [AppComponent]
 })
