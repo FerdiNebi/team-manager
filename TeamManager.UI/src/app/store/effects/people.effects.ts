@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as peopleActions from '../actions/people.actions';
 import { PeopleService } from 'src/app/people/people.service';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, flatMap } from 'rxjs/operators';
 import { Person } from 'src/app/people/person';
 
 @Injectable()
@@ -16,14 +16,14 @@ export class PeopleEffects {
 
     @Effect() addPerson$ = this.actions$.pipe(
         ofType<peopleActions.AddPerson>(peopleActions.PeopleActionTypes.AddPerson),
-        switchMap(a => this.peopleService.addPerson(a.payload)),
-        switchMap((r:any) => of(new peopleActions.AddPersonSuccess(r)))
+        flatMap(a => this.peopleService.addPerson(a.payload)),
+        flatMap((r:any) => of(new peopleActions.AddPersonSuccess(r)))
     );
 
     @Effect() deletePerson$ = this.actions$.pipe(
         ofType<peopleActions.DeletePerson>(peopleActions.PeopleActionTypes.DeletePerson),
-        switchMap(a => this.peopleService.removePerson(a.payload.id)),
-        switchMap(p => of(new peopleActions.DeletePersonSuccess(p)))
+        flatMap(a => this.peopleService.removePerson(a.payload.id).pipe(map(r => a.payload.id))),
+        flatMap(p => of(new peopleActions.DeletePersonSuccess(p)))
     );
 
     constructor(

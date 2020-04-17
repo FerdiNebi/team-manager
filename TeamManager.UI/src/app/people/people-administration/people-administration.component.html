@@ -5,9 +5,13 @@
   <li class="nav-item">
     <a class="nav-link cursor-pointer" [class.active]="action === 'RemovePerson'" (click)="action = 'RemovePerson'">Remove a person</a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link cursor-pointer" [class.active]="action === 'ImportFromWorkday'" (click)="action = 'ImportFromWorkday'">Import from Workday</a>
+  </li>
 </ul>
 
 <div class="admin-body">
     <people-create (personAdded)="personAdded($event)" [hidden]="action != 'AddPerson'"></people-create>
+    <workday-import [hidden]="action != 'ImportFromWorkday'"></workday-import>
     <people-delete (personDeleted)="personDeleted($event)" [hidden]="action != 'RemovePerson'"></people-delete>
 </div>

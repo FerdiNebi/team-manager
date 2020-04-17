@@ -19,8 +19,11 @@ namespace TeamManager.FeedbackService.Services
 
         public async Task<Feedback> CreateAsync(Feedback feedback)
         {
-            this.context.Add(feedback);
-            await this.context.SaveChangesAsync();
+            if (!this.context.Feedbacks.Any(f => f.PersonId == feedback.PersonId && f.From == feedback.From && f.Content == feedback.Content))
+            {
+                this.context.Add(feedback);
+                await this.context.SaveChangesAsync();
+            }
 
             return feedback;
         }
@@ -34,7 +37,7 @@ namespace TeamManager.FeedbackService.Services
 
             this.context.Remove(feedback);
             await this.context.SaveChangesAsync();
-            
+
             return true;
         }
 

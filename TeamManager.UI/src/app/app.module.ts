@@ -29,6 +29,7 @@ import { LoginComponent } from './login.component';
 import { MsalInterceptor2 } from './custom.interceptor';
 import { environment } from 'src/environments/environment';
 import { UserService } from './user.service';
+import { WorkdayImportComponent } from './workday-import/workday-import.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { UserService } from './user.service';
     AddFeedbackComponent,
     FeedbackHistoryComponent,
     ScrollToBottomDirective,
-    LoginComponent
+    LoginComponent,
+    WorkdayImportComponent
   ],
   imports: [
     MsalModule.forRoot({

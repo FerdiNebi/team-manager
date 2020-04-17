@@ -65,7 +65,7 @@ namespace TeamManager.PeopleService.Services
 
         public async Task<IEnumerable<Person>> GetPeopleAsync()
         {
-            return await this._context.People.Where(u => u.UserId == this.userId).ToListAsync();
+            return await this._context.People.Where(u => u.UserId == this.userId).OrderBy(p => p.Name).ToListAsync();
         }
     }
 }

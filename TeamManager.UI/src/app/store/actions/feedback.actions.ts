@@ -9,7 +9,8 @@ export enum FeedbackActionTypes {
     GetFeedback = '[Feedback] Get',
     GetFeedbackSuccess = '[Feedback] GetSuccess',
     AddFeedback = '[Feedback] Add',
-    AddFeedbackSuccess = '[Feedbac] AddSuccess'
+    AddFeedbackSuccess = '[Feedbac] AddSuccess',
+    AddBatchFeedback = '[Feedback] Add Batch'
 };
 
 /**
@@ -41,6 +42,12 @@ export class AddFeedbackSuccess implements Action {
     constructor(public payload: Feedback) { }
 }
 
+export class AddBatchFeedback implements Action {
+    readonly type = FeedbackActionTypes.AddBatchFeedback;
+
+    constructor(public payload: Feedback[]) { }
+}
+
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
@@ -49,4 +56,5 @@ export type FeedbackActions
     = GetFeedback
     | AddFeedback
     | GetFeedbackSuccess
-    | AddFeedbackSuccess;
+    | AddFeedbackSuccess
+    | AddBatchFeedback;

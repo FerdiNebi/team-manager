@@ -20,6 +20,12 @@ export class FeedbackEffects {
         flatMap(feedbackItem => of(new feedbackActions.AddFeedbackSuccess(feedbackItem)))
     );
 
+    @Effect() addBatchFeedback$: Observable<feedbackActions.AddFeedbackSuccess> = this.actions$.pipe(
+        ofType<feedbackActions.AddBatchFeedback>(feedbackActions.FeedbackActionTypes.AddBatchFeedback),
+        flatMap(a => this.feedbackService.addBatchFeedback(a.payload)),
+        flatMap(feedbackItem => of(new feedbackActions.AddFeedbackSuccess(feedbackItem)))
+    );
+
     constructor(
         private actions$: Actions,
         private feedbackService: FeedbackService

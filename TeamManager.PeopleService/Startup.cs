@@ -24,7 +24,7 @@ namespace TeamManager.PeopleService
         {
             services.AddDbContext<PeopleServiceContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("TeamManager")));
             services.AddCors();
-            services.AddRazorPages();
+            services.AddRazorPages().AddNewtonsoftJson();
             services.Add(new ServiceDescriptor(typeof(IPeopleService), typeof(TeamManager.PeopleService.Services.PeopleService), ServiceLifetime.Transient));
             services.Add(new ServiceDescriptor(typeof(IUserService), typeof(TeamManager.PeopleService.Services.UserService), ServiceLifetime.Transient));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

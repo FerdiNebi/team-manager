@@ -47,6 +47,22 @@ namespace TeamManager.FeedbackService.Controllers
             return BadRequest();
         }
 
+        [HttpPost("batchCreate")]
+        public async Task<ActionResult> BatchCreate([FromBody] Feedback[] feedbacks)
+        {
+            if (this.ModelState.IsValid)
+            {
+                foreach (var feedback in feedbacks)
+                {
+                    await this.service.CreateAsync(feedback);
+                }
+
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
