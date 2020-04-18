@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.IdentityModel.Protocols;
 using Newtonsoft.Json;
 
-namespace TeamManager.Shared.Authenticaiton
+namespace TeamManager.Shared.Authentication
 {
     /// <summary>
     /// An implementation of IConfigurationRetriever geared towards Azure AD issuers metadata />

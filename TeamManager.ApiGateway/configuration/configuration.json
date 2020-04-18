@@ -21,9 +21,6 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "AzureADBearer",
         "AllowedScopes": []
-      },
-      "AddHeadersToRequest": {
-        "USER_ID": "Claims[http://schemas.microsoft.com/identity/claims/objectidentifier] > value"
       }
     },
     {
@@ -47,9 +44,6 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "AzureADBearer",
         "AllowedScopes": []
-      },
-      "AddHeadersToRequest": {
-        "USER_ID": "Claims[http://schemas.microsoft.com/identity/claims/objectidentifier] > value"
       }
     }
   ],

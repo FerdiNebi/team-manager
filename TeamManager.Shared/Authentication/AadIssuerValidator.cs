@@ -10,7 +10,7 @@ using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Protocols;
 using Microsoft.IdentityModel.Tokens;
 
-namespace TeamManager.Shared.Authenticaiton
+namespace TeamManager.Shared.Authentication
 {
     /// <summary>
     /// Generic class that validates token issuer from the provided Azure AD authority. Use the <see cref="AadIssuerValidatorFactory"/> to create instances of this class.

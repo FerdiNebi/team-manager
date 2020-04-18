@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS publish
 WORKDIR /src
-COPY ["../TeamManager.Shared/TeamManager.Shared.csproj", "./TeamManager.Shared/"]
-COPY ["TeamManager.PeopleService.csproj", "./TeamManager.PeopleService/"]
+COPY ["TeamManager.Shared/TeamManager.Shared.csproj", "./TeamManager.Shared/"]
+COPY ["TeamManager.PeopleService/TeamManager.PeopleService.csproj", "./TeamManager.PeopleService/"]
 RUN dotnet restore "./TeamManager.PeopleService/TeamManager.PeopleService.csproj"
 COPY . .
 RUN dotnet publish "./TeamManager.PeopleService/TeamManager.PeopleService.csproj" -c Release -o /app/publish

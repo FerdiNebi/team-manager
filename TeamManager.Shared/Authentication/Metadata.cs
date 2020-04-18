@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace TeamManager.Shared.Authenticaiton
+namespace TeamManager.Shared.Authentication
 {
     /// <summary>
     /// Model child class to hold alias information parsed from the Azure AD issuer endpoint.
