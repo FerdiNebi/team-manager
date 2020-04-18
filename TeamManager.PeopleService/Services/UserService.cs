@@ -1,3 +1,4 @@
+using System.Linq;
 using Microsoft.AspNetCore.Http;
 
 namespace TeamManager.PeopleService.Services
@@ -13,7 +14,7 @@ namespace TeamManager.PeopleService.Services
 
         public string GetUserSubject()
         {
-            return this.httpContextAccessor.HttpContext.Request.Headers["USER_ID"].ToString();
+            return this.httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier").Value;
         }
     }
 }

@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using TeamManager.Shared.Authenticaiton;
 
 namespace TeamManager.ApiGateway
 {

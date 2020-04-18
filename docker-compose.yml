@@ -20,13 +20,14 @@ services:
     ports:
       - "5005:5005"
     volumes:
-      - ./TeamManager.ApiGateway:/app
+      - ./:/app
     environment:
       - 'ConnectionStrings:TeamManager=server=db,1433;database=TeamManager;User Id=sa;Password=sa12345!;MultipleActiveResultSets=True'
       - 'ASPNETCORE_URLS=http://*:5005'
       - 'DOTNET_USE_POLLING_FILE_WATCHER=1'
     depends_on:
-      - db
+      - people
+      - feedback
   people:
     container_name: PeopleService
     build:
@@ -34,7 +35,7 @@ services:
       dockerfile: Dockerfile
     restart: on-failure
     volumes:
-      - ./TeamManager.PeopleService:/app
+      - ./:/app
     environment:
       - 'ConnectionStrings:TeamManager=server=db,1433;database=TeamManager;User Id=sa;Password=sa12345!;MultipleActiveResultSets=True'
       - 'ASPNETCORE_URLS=http://*:80'
@@ -65,9 +66,6 @@ services:
     volumes:
       - ./TeamManager.UI/src:/home/app/angular-app/src
     depends_on:
-      - db
       - apigtw
-      - people
-      - feedback
 volumes: 
   database: 

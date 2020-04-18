@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace TeamManager.ApiGateway
+namespace TeamManager.Shared.Authenticaiton
 {
     /// <summary>
     /// Model class to hold information parsed from the Azure AD issuer endpoint
