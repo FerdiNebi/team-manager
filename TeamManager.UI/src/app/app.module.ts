@@ -26,7 +26,6 @@ import { AddFeedbackComponent } from './feedback/add-feedback/add-feedback.compo
 import { FeedbackHistoryComponent } from './feedback/feedback-history/feedback-history.component';
 import { ScrollToBottomDirective } from './shared/scroll-to-bottom.directive';
 import { LoginComponent } from './login.component';
-import { MsalInterceptor2 } from './custom.interceptor';
 import { environment } from 'src/environments/environment';
 import { UserService } from './user.service';
 import { WorkdayImportComponent } from './workday-import/workday-import.component';
