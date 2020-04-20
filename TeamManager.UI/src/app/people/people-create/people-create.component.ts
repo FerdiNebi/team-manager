@@ -24,10 +24,10 @@ export class PeopleCreateComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.subscription = this.actions$.pipe(
-            ofType(peopleActions.PeopleActionTypes.AddPersonSuccess)
-        ).subscribe(person => {
+            ofType<peopleActions.AddPersonSuccess>(peopleActions.PeopleActionTypes.AddPersonSuccess)
+        ).subscribe(action => {
             this.creating = false;
-            this.personAdded.emit(person);
+            this.personAdded.emit(action.payload);
             this.model = new Person();
         });
     }

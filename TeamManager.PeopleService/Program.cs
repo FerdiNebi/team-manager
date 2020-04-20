@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using TeamManager.PeopleService.Data;
 using TeamManager.PeopleService.Models;
@@ -16,11 +17,16 @@ namespace TeamManager.PeopleService
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().MigrateDatabase<PeopleServiceContext>().Run();
+            CreateHostBuilder(args).Build().MigrateDatabase<PeopleServiceContext>().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();        
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
+        }
     }
 }

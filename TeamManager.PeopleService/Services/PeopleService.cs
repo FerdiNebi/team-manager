@@ -11,23 +11,33 @@ namespace TeamManager.PeopleService.Services
     public class PeopleService : IPeopleService
     {
         private readonly PeopleServiceContext _context;
+        private readonly string userId;
 
-        public PeopleService(PeopleServiceContext context)
+        public PeopleService(PeopleServiceContext context, IUserService userService)
         {
             this._context = context;
+            this.userId = userService.GetUserSubject();
 
-            if (this._context.People.Count() == 0)
+            if (string.IsNullOrWhiteSpace(this.userId))
+                throw new ArgumentNullException("userId");
+
+            if (this._context.People.Where(u => u.UserId == this.userId).Count() == 0)
             {
-                this._context.People.Add(new Person() { Name = "John" });
+                this._context.People.Add(new Person() { Name = "John", UserId = this.userId });
                 this._context.SaveChanges();
             }
         }
 
         public async Task<Person> CreatePersonAsync(string name)
         {
-            if (!string.IsNullOrWhiteSpace(name)){
+            if (string.IsNullOrWhiteSpace(this.userId))
+                throw new ArgumentNullException("userId");
+
+            if (!string.IsNullOrWhiteSpace(name))
+            {
                 var person = new Person();
                 person.Name = name;
+                person.UserId = this.userId;
                 this._context.Add(person);
                 await this._context.SaveChangesAsync();
 
@@ -39,8 +49,12 @@ namespace TeamManager.PeopleService.Services
 
         public async Task<bool> DeletePersonAsync(Guid id)
         {
-             var person = this._context.People.Find(id);
-            if (person != null){
+            if (string.IsNullOrWhiteSpace(this.userId))
+                throw new ArgumentNullException("userId");
+
+            var person = this._context.People.Where(u => u.UserId == this.userId && u.Id == id).FirstOrDefault();
+            if (person != null)
+            {
                 this._context.Remove(person);
                 await this._context.SaveChangesAsync();
                 return true;
@@ -51,7 +65,7 @@ namespace TeamManager.PeopleService.Services
 
         public async Task<IEnumerable<Person>> GetPeopleAsync()
         {
-            return await this._context.People.ToListAsync();
+            return await this._context.People.Where(u => u.UserId == this.userId).OrderBy(p => p.Name).ToListAsync();
         }
     }
 }

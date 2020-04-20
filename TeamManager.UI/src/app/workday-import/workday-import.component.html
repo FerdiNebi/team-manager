@@ -1,0 +1,7 @@
+<p>Import an xlsx file exported from Workday.</p>
+
+<input type="file" (change)="addfile($event)" />
+
+<button type="submit" class="btn btn-success" (click)="import()" [disabled]="!feedbackList || importing">
+    Import
+</button>

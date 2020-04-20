@@ -21,7 +21,7 @@ namespace TeamManager.FeedbackService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<FeedbackContext>(opt => opt.UseSqlServer(Configuration["ConnectionString:TeamManager"]));
+            services.AddDbContext<FeedbackContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("TeamManager")));
             services.AddCors();
             services.AddMvc(setupAction =>
             {

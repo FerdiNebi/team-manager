@@ -9,26 +9,37 @@ services:
     environment:
       - ACCEPT_EULA=y
       - SA_PASSWORD=sa12345!
-    networks:
-      - team-manager-network
     volumes:
       - database:/var/opt/mssql
+  apigtw: 
+    container_name: ApiGateway
+    build:
+        context: ./TeamManager.ApiGateway/
+        dockerfile: Dockerfile
+    restart: on-failure
+    ports:
+      - "5005:5005"
+    volumes:
+      - ./:/app
+    environment:
+      - 'ConnectionStrings:TeamManager=server=db,1433;database=TeamManager;User Id=sa;Password=sa12345!;MultipleActiveResultSets=True'
+      - 'ASPNETCORE_URLS=http://*:5005'
+      - 'DOTNET_USE_POLLING_FILE_WATCHER=1'
+    depends_on:
+      - people
+      - feedback
   people:
     container_name: PeopleService
     build:
       context: ./TeamManager.PeopleService/
       dockerfile: Dockerfile
     restart: on-failure
-    ports:
-      - "5000:5000"
     volumes:
-      - ./TeamManager.PeopleService:/app
+      - ./:/app
     environment:
-      - 'ConnectionString:TeamManager=server=db,1433;database=TeamManager;User Id=sa;Password=sa12345!;MultipleActiveResultSets=True'
-      - 'ASPNETCORE_URLS=http://*:5000'
+      - 'ConnectionStrings:TeamManager=server=db,1433;database=TeamManager;User Id=sa;Password=sa12345!;MultipleActiveResultSets=True'
+      - 'ASPNETCORE_URLS=http://*:80'
       - 'DOTNET_USE_POLLING_FILE_WATCHER=1'
-    networks:
-      - team-manager-network
     depends_on:
       - db
   feedback:
@@ -37,16 +48,12 @@ services:
       context: ./TeamManager.FeedbackService/
       dockerfile: Dockerfile
     restart: on-failure
-    ports:
-      - "5002:5002"
     volumes:
       - ./TeamManager.FeedbackService:/app
     environment:
-      - 'ConnectionString:TeamManager=server=db,1433;database=TeamManager;User Id=sa;Password=sa12345!;MultipleActiveResultSets=True'
-      - 'ASPNETCORE_URLS=http://*:5002'
+      - 'ConnectionStrings:TeamManager=server=db,1433;database=TeamManager;User Id=sa;Password=sa12345!;MultipleActiveResultSets=True'
+      - 'ASPNETCORE_URLS=http://*:80'
       - 'DOTNET_USE_POLLING_FILE_WATCHER=1'
-    networks:
-      - team-manager-network
     depends_on:
       - db
   ui:
@@ -58,13 +65,7 @@ services:
       - "4200:4200"
     volumes:
       - ./TeamManager.UI/src:/home/app/angular-app/src
-    networks:
-      - team-manager-network
     depends_on:
-      - db
-      - people
-networks:
-  team-manager-network:
-    driver: bridge
+      - apigtw
 volumes: 
   database: 

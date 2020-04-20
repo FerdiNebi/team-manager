@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule }   from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { MsalModule, MsalInterceptor } from '@azure/msal-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,6 +25,10 @@ import { feedbackReducer } from './store/reducers/feedback.reducers';
 import { AddFeedbackComponent } from './feedback/add-feedback/add-feedback.component';
 import { FeedbackHistoryComponent } from './feedback/feedback-history/feedback-history.component';
 import { ScrollToBottomDirective } from './shared/scroll-to-bottom.directive';
+import { LoginComponent } from './login.component';
+import { environment } from 'src/environments/environment';
+import { UserService } from './user.service';
+import { WorkdayImportComponent } from './workday-import/workday-import.component';
 
 @NgModule({
   declarations: [
@@ -37,19 +42,42 @@ import { ScrollToBottomDirective } from './shared/scroll-to-bottom.directive';
     ModalDialogComponent,
     AddFeedbackComponent,
     FeedbackHistoryComponent,
-    ScrollToBottomDirective
+    ScrollToBottomDirective,
+    LoginComponent,
+    WorkdayImportComponent
   ],
   imports: [
+    MsalModule.forRoot({
+      auth: {
+        clientId: "7f691190-b6d4-42f9-996f-21c64aa7d1ad",
+        authority: "https://login.microsoftonline.com/common/",
+        redirectUri: environment.appUrl,
+        postLogoutRedirectUri: environment.appUrl,
+      },
+      cache: {
+        cacheLocation: "sessionStorage",
+        storeAuthStateInCookie: true, // set to true for IE 11
+      }
+    }, {
+      popUp: false,
+      consentScopes: ["https://ferdinebievgmail.onmicrosoft.com/TeamManager/access_as_user", "profile"],
+      extraQueryParameters: {},
+      unprotectedResources: [],
+      protectedResourceMap: [
+        [environment.peopleServiceUrl, ["https://ferdinebievgmail.onmicrosoft.com/TeamManager/access_as_user"]],
+        [environment.feedbackServiceUrl, ["https://ferdinebievgmail.onmicrosoft.com/TeamManager/access_as_user"]]
+      ]
+    }),
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
     OverlayModule,
-    StoreModule.forRoot({people: peopleReducer, feedback: feedbackReducer}),
+    StoreModule.forRoot({ people: peopleReducer, feedback: feedbackReducer }),
     EffectsModule.forRoot([PeopleEffects, FeedbackEffects])
   ],
-  providers: [PeopleService, FeedbackService],
-  entryComponents: [PeopleComponent, PeopleAdministrationComponent],
+  providers: [PeopleService, FeedbackService, { provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true }, UserService],
+  entryComponents: [PeopleComponent, PeopleAdministrationComponent, LoginComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

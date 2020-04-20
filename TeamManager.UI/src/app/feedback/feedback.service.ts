@@ -18,4 +18,8 @@ export class FeedbackService {
     addFeedback(feedback: Feedback): Observable<Feedback> {
         return this.http.post<Feedback>(this.ServiceUrl, feedback);
     }
+
+    addBatchFeedback(batchFeedback: Feedback[]): Observable<any> {
+        return this.http.post<any>(this.ServiceUrl + "/batchCreate", batchFeedback);
+    }
 }
