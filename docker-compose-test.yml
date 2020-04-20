@@ -59,6 +59,10 @@ services:
     build:      
       context: ./TeamManager.UI/
       dockerfile: prod.dockerfile
+    environment: 
+      - 'FEEDBACK_API_URL=http://localhost:5005/f/feedback'
+      - 'PEOPLE_API_URL=http://localhost:5005/p/people'
+      - 'APP_URL=http://localhost:4200/'
     ports:
       - "4200:4200"
     depends_on:
