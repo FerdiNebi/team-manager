@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using TeamManager.Shared.Cryptography;
 
 namespace TeamManager.FeedbackService.Model
 {
@@ -16,8 +17,21 @@ namespace TeamManager.FeedbackService.Model
 
         public Guid FromPersonId { get; set; }
 
-        public string Content { get; set; }
+        public string Content
+        {
+            get
+            {
+                return Encryptor.Decrypt(this.content);
+            }
+
+            set
+            {
+                this.content = Encryptor.Encrypt(value);
+            }
+        }
 
         public FeedbackType FeedbackType { get; set; }
+
+        private string content;
     }
 }

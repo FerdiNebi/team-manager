@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TeamManager.FeedbackService.Data;
 using TeamManager.FeedbackService.Services;
 using TeamManager.Shared.Authentication;
+using TeamManager.Shared.Cryptography;
 
 namespace TeamManager.FeedbackService
 {
@@ -24,6 +25,7 @@ namespace TeamManager.FeedbackService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            Encryptor.Password = Configuration.GetValue<string>("EncryptionKey");
             services.AddDbContext<FeedbackContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("TeamManager")));
             services.AddCors();
             services.AddRazorPages().AddNewtonsoftJson();
