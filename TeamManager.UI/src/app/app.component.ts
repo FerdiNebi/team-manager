@@ -18,9 +18,10 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isIframe = window !== window.parent && !window.opener;
 
-    this.subscription = this.broadcastService.subscribe("msal:loginSuccess", (payload) => {
-      console.log("login success");
-      this.user = payload.idToken;
+    this.subscription = this.broadcastService.subscribe("msal:acquireTokenSuccess", (payload) => {
+      if (payload) {
+        this.user = payload.idToken;
+      }
     });
 
     this.authService.handleRedirectCallback((redirectError: AuthError, redirectResponse: AuthResponse) => {
@@ -33,7 +34,8 @@ export class AppComponent implements OnInit, OnDestroy {
     });
 
     this.authService.setLogger(new Logger((logLevel, message, piiEnabled) => {
-      console.log('MSAL Logging: ', message);
+      // Uncomment to log authentication status
+      // console.log('MSAL Logging: ', message);
     }, {
       correlationId: CryptoUtils.createNewGuid(),
       piiLoggingEnabled: false
