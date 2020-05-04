@@ -49,7 +49,7 @@ services:
       dockerfile: Dockerfile
     restart: on-failure
     volumes:
-      - ./TeamManager.FeedbackService:/app
+      - ./:/app
     environment:
       - 'ConnectionStrings:TeamManager=server=db,1433;database=TeamManager;User Id=sa;Password=sa12345!;MultipleActiveResultSets=True'
       - 'ASPNETCORE_URLS=http://*:80'

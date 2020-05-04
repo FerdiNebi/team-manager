@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using TeamManager.FeedbackService.Data;
+using TeamManager.Shared;
 
 namespace TeamManager.FeedbackService
 {
@@ -8,11 +9,16 @@ namespace TeamManager.FeedbackService
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().MigrateDatabase<FeedbackContext>().Run();
+            CreateHostBuilder(args).Build().MigrateDatabase<FeedbackContext>().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
+        }
     }
 }

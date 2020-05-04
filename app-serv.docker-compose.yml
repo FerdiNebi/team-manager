@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  apigtw: 
+    container_name: ApiGateway
+    image: ferdisregistry.azurecr.io/teammanager.apigw:apigw
+    restart: on-failure
+    ports:
+      - "80:80"
+  people:
+    container_name: PeopleService
+    image: ferdisregistry.azurecr.io/teammanager.peopleservice:latest
+    restart: on-failure
+  feedback:
+    container_name: FeedbackService
+    image: ferdisregistry.azurecr.io/teammanager.feedbackservice:latest
+    restart: on-failure
