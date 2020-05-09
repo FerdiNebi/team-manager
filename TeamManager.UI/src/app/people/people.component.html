@@ -3,12 +3,14 @@
     <person [person]="person"></person>
   </li>
 </ul>
-<div *ngIf="(people$ | async).length === 0" class="d-flex justify-content-center">
-  <a class="btn btn-link px-5 mb-4" [routerLink]="['/administration']">
-    Add people
-  </a>
-  <span class="pt-2">or</span>
-  <a class="btn btn-link px-5 mb-4" [routerLink]="['/administration']" [queryParams]="{tab: 'import'}">
-    Import from Workday
-  </a>
-</div>
+<ng-container *ngIf="people$ | async as people">
+  <div *ngIf="people.length === 0" class="d-flex justify-content-center">
+    <a class="btn btn-link px-5 mb-4" [routerLink]="['/administration']">
+      Add people
+    </a>
+    <span class="pt-2">or</span>
+    <a class="btn btn-link px-5 mb-4" [routerLink]="['/administration']" [queryParams]="{tab: 'import'}">
+      Import from Workday
+    </a>
+  </div>
+</ng-container>
