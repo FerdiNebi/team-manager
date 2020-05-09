@@ -3,7 +3,7 @@
     <person [person]="person"></person>
   </li>
 </ul>
-<div class="d-flex justify-content-center">
+<div *ngIf="(people$ | async).length === 0" class="d-flex justify-content-center">
   <a class="btn btn-link px-5 mb-4" [routerLink]="['/administration']">
     Add people
   </a>
