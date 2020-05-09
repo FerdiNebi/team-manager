@@ -20,7 +20,7 @@ namespace TeamManager.Shared
                 }
                 catch (Exception ex)
                 {
-                    var logger = services.GetRequiredService<ILogger>();
+                    var logger = services.GetRequiredService<ILogger<Program>>();
                     logger.LogError(ex, "An error occurred while migrating the database.");
                 }
             }

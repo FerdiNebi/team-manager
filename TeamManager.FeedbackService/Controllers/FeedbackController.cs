@@ -36,7 +36,7 @@ namespace TeamManager.FeedbackService.Controllers
         // }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] Feedback feedback)
+        public async Task<ActionResult> Post([FromBody] FeedbackViewModel feedback)
         {
             if (this.ModelState.IsValid)
             {
@@ -48,7 +48,7 @@ namespace TeamManager.FeedbackService.Controllers
         }
 
         [HttpPost("batchCreate")]
-        public async Task<ActionResult> BatchCreate([FromBody] Feedback[] feedbacks)
+        public async Task<ActionResult> BatchCreate([FromBody] FeedbackViewModel[] feedbacks)
         {
             if (this.ModelState.IsValid)
             {

@@ -17,46 +17,46 @@ namespace TeamManager.FeedbackService.Services
             this.context = context;
         }
 
-        public async Task<Feedback> CreateAsync(Feedback feedback)
+        public async Task<FeedbackViewModel> CreateAsync(FeedbackViewModel feedbackViewModel)
         {
+            var feedback = new Feedback(feedbackViewModel);
             if (!this.context.Feedbacks.Any(f => f.PersonId == feedback.PersonId && f.From == feedback.From && f.Content == feedback.Content))
             {
                 this.context.Add(feedback);
                 await this.context.SaveChangesAsync();
             }
 
-            return feedback;
+            return new FeedbackViewModel(feedback);
         }
 
-        public async Task<bool> DeleteAsync(Feedback feedback)
+        public async Task<bool> DeleteAsync(Guid feedbackId)
         {
-            if (this.context.Entry(feedback).State == EntityState.Detached)
-            {
-                this.context.Attach(feedback);
-            }
-
+            var feedback = this.context.Find<Feedback>(feedbackId);
             this.context.Remove(feedback);
             await this.context.SaveChangesAsync();
 
             return true;
         }
 
-        public async Task<Feedback> GetAsync(Guid id)
+        public async Task<FeedbackViewModel> GetAsync(Guid id)
         {
-            return await this.context.Feedbacks.FindAsync(id);
+            var feedback = await this.context.Feedbacks.FindAsync(id);
+            return new FeedbackViewModel(feedback);
         }
 
-        public async Task<IEnumerable<Feedback>> GetAllAsync(Guid personId)
+        public async Task<IEnumerable<FeedbackViewModel>> GetAllAsync(Guid personId)
         {
-            return await this.context.Feedbacks.Where(f => f.PersonId == personId).OrderBy(f => f.CreatedOn).AsNoTracking().ToListAsync();
+            var feedbackItems = await this.context.Feedbacks.Where(f => f.PersonId == personId).OrderBy(f => f.CreatedOn).AsNoTracking().ToListAsync();
+            return feedbackItems.Select(f => new FeedbackViewModel(f));
         }
 
-        public async Task<Feedback> UpdateAsync(Feedback feedback)
+        public async Task<FeedbackViewModel> UpdateAsync(FeedbackViewModel feedbackViewModel)
         {
+            var feedback = new Feedback(feedbackViewModel);
             this.context.Update(feedback);
             await this.context.SaveChangesAsync();
 
-            return feedback;
+            return feedbackViewModel;
         }
     }
 }

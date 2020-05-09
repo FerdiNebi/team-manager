@@ -1,16 +1,16 @@
 using System;
-using System.ComponentModel.DataAnnotations;
 using TeamManager.Shared.Cryptography;
 
 namespace TeamManager.FeedbackService.Model
 {
-    public class Feedback
+    public class FeedbackViewModel
     {
-        public Feedback()
-        {            
+        public FeedbackViewModel()
+        {
+            
         }
         
-        public Feedback(FeedbackViewModel feedback)
+        public FeedbackViewModel(Feedback feedback)
         {
             this.Id = feedback.Id;
             this.PersonId = feedback.PersonId;
@@ -18,10 +18,9 @@ namespace TeamManager.FeedbackService.Model
             this.From = feedback.From;
             this.FromPersonId  = feedback.FromPersonId;
             this.FeedbackType = feedback.FeedbackType;
-            this.Content = Encryptor.Encrypt(feedback.Content);
+            this.Content = Encryptor.Decrypt(feedback.Content);
         }
 
-        [Key]
         public Guid Id { get; set; }
 
         public Guid PersonId { get; set; }

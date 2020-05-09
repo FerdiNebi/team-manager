@@ -20,12 +20,6 @@ namespace TeamManager.PeopleService.Services
 
             if (string.IsNullOrWhiteSpace(this.userId))
                 throw new ArgumentNullException("userId");
-
-            if (this._context.People.Where(u => u.UserId == this.userId).Count() == 0)
-            {
-                this._context.People.Add(new Person() { Name = "John", UserId = this.userId });
-                this._context.SaveChanges();
-            }
         }
 
         public async Task<Person> CreatePersonAsync(string name)

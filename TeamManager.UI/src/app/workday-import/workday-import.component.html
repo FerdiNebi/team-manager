@@ -1,7 +1,12 @@
 <p>Import an xlsx file exported from Workday.</p>
 
-<input type="file" (change)="addfile($event)" />
+<input type="file" (change)="addfile($event)" [disabled]="importing" #fileInput />
 
 <button type="submit" class="btn btn-success" (click)="import()" [disabled]="!feedbackList || importing">
-    Import
+    <span *ngIf="importing">
+        Importing...
+    </span>
+    <span *ngIf="!importing">
+        Import
+    </span>
 </button>

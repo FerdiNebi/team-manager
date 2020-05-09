@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import * as XLSX from 'xlsx';
 import { Store, select } from '@ngrx/store';
 import { IAppState } from '../store/state/app-state';
@@ -16,7 +16,12 @@ import { FeedbackType, Feedback } from '../feedback/feedback';
 })
 export class WorkdayImportComponent implements OnInit {
 
+  importing = false;
+  private importedPeopleCount: number = 0;
+  private totalPeopleToImport: number = 0;
   private feedbackList: any[];
+  @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
+
   constructor(private store: Store<IAppState>, private actions$: Actions) { }
 
   ngOnInit() {
@@ -46,6 +51,9 @@ export class WorkdayImportComponent implements OnInit {
   }
 
   import() {
+    this.importing = true;
+    this.fileInput.nativeElement.value = null;
+    this.importedPeopleCount = 0;
     this.store.pipe(select(s => s.people), first()).subscribe(people => {
       const peopleIdsByName: { [key: string]: string } = {};
       if (people) {
@@ -63,10 +71,13 @@ export class WorkdayImportComponent implements OnInit {
         }
       }
 
+      this.totalPeopleToImport = Object.keys(peopleIdsByName).length;
       if (people) {
-        for (const person of people) {
-          this.importFeedbackForPerson(person);
-        }
+        setTimeout(() => {
+          for (const person of people) {
+            this.importFeedbackForPerson(person);
+          }
+        }, 0);
       }
     });
   }
@@ -99,6 +110,12 @@ export class WorkdayImportComponent implements OnInit {
 
     if (batchFeedback.length > 0) {
       this.store.dispatch(new AddBatchFeedback(batchFeedback));
+    }
+
+    this.importedPeopleCount++;
+    if (this.totalPeopleToImport === this.importedPeopleCount) {
+      this.feedbackList = null;
+      this.importing = false;
     }
   }
 
