@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-people-administration',
@@ -9,13 +10,17 @@ import { Router } from '@angular/router';
 export class PeopleAdministrationComponent implements OnInit {
 
   action: string = 'AddPerson';
-  constructor(private router: Router) { }
+  constructor(private activatedRoute: ActivatedRoute, private location: Location) { }
 
   ngOnInit() {
+    if (this.activatedRoute.snapshot.queryParams["tab"] === "import") {
+      this.action = "ImportFromWorkday";
+      this.location.replaceState("/administration");
+    }
   }
 
   personAdded(person) {
-    
+
   }
 
   personDeleted(id) {
