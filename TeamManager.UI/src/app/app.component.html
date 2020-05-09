@@ -12,8 +12,9 @@
             [routerLink]="[ '/administration']">Administration</a></li>
       </ul>
       <span *ngIf="user" class="navbar-text">
-        Hello, {{user.name}}
+        Hello, {{user.name.split(' ')[0]}} ({{user.preferredName}})        
       </span>
+      <button *ngIf="user" class="btn btn-link pl-1" (click)="logout()">Log out</button>
     </div>
   </nav>
   <router-outlet *ngIf="!isIframe"></router-outlet>
