@@ -11,6 +11,12 @@ services:
       - SA_PASSWORD=sa12345!
     volumes:
       - database:/var/opt/mssql
+  servicebus:
+    image: rabbitmq:3-management
+    container_name: servicebus
+    ports:
+      - 5672:5672
+      - 15672:15672
   apigtw: 
     container_name: ApiGateway
     build:
@@ -21,6 +27,8 @@ services:
       - "5005:5005"
     volumes:
       - ./:/app
+      - /app/TeamManager.ApiGateway/bin
+      - /app/TeamManager.ApiGateway/obj      
     environment:
       - 'ConnectionStrings:TeamManager=server=db,1433;database=TeamManager;User Id=sa;Password=sa12345!;MultipleActiveResultSets=True'
       - 'ASPNETCORE_URLS=http://*:5005'
@@ -36,12 +44,15 @@ services:
     restart: on-failure
     volumes:
       - ./:/app
+      - /app/TeamManager.PeopleService/bin
+      - /app/TeamManager.PeopleService/obj
     environment:
       - 'ConnectionStrings:TeamManager=server=db,1433;database=TeamManager;User Id=sa;Password=sa12345!;MultipleActiveResultSets=True'
       - 'ASPNETCORE_URLS=http://*:80'
       - 'DOTNET_USE_POLLING_FILE_WATCHER=1'
     depends_on:
       - db
+      - servicebus
   feedback:
     container_name: FeedbackService
     build:
@@ -50,12 +61,15 @@ services:
     restart: on-failure
     volumes:
       - ./:/app
+      - /app/TeamManager.FeedbackService/bin
+      - /app/TeamManager.FeedbackService/obj
     environment:
       - 'ConnectionStrings:TeamManager=server=db,1433;database=TeamManager;User Id=sa;Password=sa12345!;MultipleActiveResultSets=True'
       - 'ASPNETCORE_URLS=http://*:80'
       - 'DOTNET_USE_POLLING_FILE_WATCHER=1'
     depends_on:
       - db
+      - servicebus
   ui:
     container_name: UI
     build:      

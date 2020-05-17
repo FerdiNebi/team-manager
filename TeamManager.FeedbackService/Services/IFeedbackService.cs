@@ -13,6 +13,8 @@ namespace TeamManager.FeedbackService.Services
 
          Task<bool> DeleteAsync(Guid feedbackId);
 
+         Task<bool> DeleteAllForPersonAsync(Guid personId);
+
          Task<FeedbackViewModel> CreateAsync(FeedbackViewModel feedback);
 
          Task<FeedbackViewModel> UpdateAsync(FeedbackViewModel feedback);

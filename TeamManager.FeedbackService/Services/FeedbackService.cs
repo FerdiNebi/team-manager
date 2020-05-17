@@ -58,5 +58,14 @@ namespace TeamManager.FeedbackService.Services
 
             return feedbackViewModel;
         }
+
+        public async Task<bool> DeleteAllForPersonAsync(Guid personId)
+        {
+             var feedbackItems = this.context.Feedbacks.Where(f => f.PersonId == personId);
+             this.context.RemoveRange(feedbackItems);
+             
+             await this.context.SaveChangesAsync();
+             return true;
+        }
     }
 }

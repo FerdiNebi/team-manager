@@ -10,6 +10,11 @@ using TeamManager.FeedbackService.Data;
 using TeamManager.FeedbackService.Services;
 using TeamManager.Shared.Authentication;
 using TeamManager.Shared.Cryptography;
+using RabbitMQ.Client;
+using TeamManager.Shared.Messaging;
+using System;
+using System.Linq;
+using Microsoft.Extensions.Logging;
 
 namespace TeamManager.FeedbackService
 {
@@ -39,6 +44,13 @@ namespace TeamManager.FeedbackService
 
             services.AddScoped<IFeedbackService, TeamManager.FeedbackService.Services.FeedbackService>();
             services.AddAzureAuthentication();
+            services.AddSingleton<IConnectionFactory>(sp =>
+            {
+                return new ConnectionFactory() { HostName = "servicebus" };
+            });
+
+            services.AddSingleton(typeof(IServiceBus), typeof(RabbitMQClient));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,6 +79,27 @@ namespace TeamManager.FeedbackService
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            ConfigureEventBus(app);
+        }
+
+        private void ConfigureEventBus(IApplicationBuilder app)
+        {
+            var logger = app.ApplicationServices.GetRequiredService<ILogger<Program>>();
+            var life = app.ApplicationServices.GetService<Microsoft.Extensions.Hosting.IHostApplicationLifetime>();
+            life.ApplicationStarted.Register(() =>
+            { 
+                System.Threading.Thread.Sleep(120000);
+                var serviceBus = app.ApplicationServices.GetRequiredService<IServiceBus>();
+                serviceBus.SubscribeForQueue("personDeleted", async (message) =>
+                {
+                    using (var scope = app.ApplicationServices.CreateScope())
+                    {
+                        var feedbackService = scope.ServiceProvider.GetRequiredService<IFeedbackService>();
+                        await feedbackService.DeleteAllForPersonAsync(Guid.Parse(message));
+                    }
+                });
             });
         }
     }

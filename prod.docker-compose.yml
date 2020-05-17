@@ -40,6 +40,7 @@ services:
       - 'DOTNET_USE_POLLING_FILE_WATCHER=1'
     depends_on:
       - db
+      - servicebus
   feedback:
     image: ferdisregistry.azurecr.io/teammanager.feedbackservice:latest
     container_name: FeedbackService
@@ -53,6 +54,7 @@ services:
       - 'DOTNET_USE_POLLING_FILE_WATCHER=1'
     depends_on:
       - db
+      - servicebus
   ui:
     image: ferdisregistry.azurecr.io/teammanager.ui:latest
     container_name: UI
@@ -67,5 +69,10 @@ services:
       - "4200:4200"
     depends_on:
       - apigtw
+  servicebus:
+    image: rabbitmq
+    container_name: servicebus
+    ports:
+      - 5672:5672
 volumes: 
   database: 

@@ -3,7 +3,7 @@ version: '3.7'
 services:
   apigtw: 
     container_name: ApiGateway
-    image: ferdisregistry.azurecr.io/teammanager.apigw:apigw
+    image: ferdisregistry.azurecr.io/teammanager.apigw:latest
     restart: on-failure
     ports:
       - "80:80"
@@ -15,3 +15,8 @@ services:
     container_name: FeedbackService
     image: ferdisregistry.azurecr.io/teammanager.feedbackservice:latest
     restart: on-failure
+  servicebus:
+    image: rabbitmq
+    container_name: servicebus
+    ports:
+      - "5672:5672"
