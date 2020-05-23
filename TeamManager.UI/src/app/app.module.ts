@@ -31,6 +31,7 @@ import { UserService } from './user.service';
 import { WorkdayImportComponent } from './workday-import/workday-import.component';
 import { PersonResolverService } from './people/person-resolver.service';
 import { SidebarLayoutComponent } from './shared/sidebar-layout/sidebar-layout/sidebar-layout.component';
+import { ShortenNamePipe } from './shared/pipes/shorten-name.pipe';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { SidebarLayoutComponent } from './shared/sidebar-layout/sidebar-layout/s
     ScrollToBottomDirective,
     LoginComponent,
     WorkdayImportComponent,
-    SidebarLayoutComponent
+    SidebarLayoutComponent,
+    ShortenNamePipe
   ],
   imports: [
     MsalModule.forRoot({

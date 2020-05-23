@@ -2,9 +2,9 @@
   <div class="sidebar-content people-list">
     <div class="people-list-item" *ngFor="let person of people$ | async">
       <a routerLink="/people/{{person.id}}" routerLinkActive="active">
-        <div>
+        <div title="{{person.name}}">
           <i class="fas fa-user-alt"></i>
-          {{ person.name }}
+          {{ person.name | shortenName }}
         </div>
       </a>
     </div>
