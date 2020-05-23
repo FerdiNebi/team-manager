@@ -59,6 +59,21 @@ ul li {
     margin-top: 1rem;
 }
 
+button {
+    width: 100%;
+    height: 3rem;
+    color: #fff;
+}
+
+button.feedback-button {
+    background: #0099FF;
+}
+
+button.one-on-one-button {
+    margin-top: 0.6rem;
+    background: #FA3C4C;
+}
+
 // .him+.me {
 //     border-bottom-right-radius: 5px;
 // }

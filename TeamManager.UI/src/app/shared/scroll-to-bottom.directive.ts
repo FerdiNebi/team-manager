@@ -14,9 +14,13 @@ export class ScrollToBottomDirective implements OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.isVisible && changes.isVisible.currentValue) {
-            interval(10).pipe(first()).subscribe(() => {
-                this.element.nativeElement.scrollTop = this.element.nativeElement.scrollHeight;
-            });
+            this.scrollToBottom()
         }
+    }
+
+    scrollToBottom() {
+        interval(10).pipe(first()).subscribe(() => {
+            this.element.nativeElement.scrollTop = this.element.nativeElement.scrollHeight;
+        });
     }
 }

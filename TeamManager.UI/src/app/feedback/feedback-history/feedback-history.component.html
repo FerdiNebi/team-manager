@@ -1,12 +1,27 @@
-<div class="feedback-container scrollbar" *ngIf="feedback$ | async as feedbackItems; else loading;" [scrollToBottom]="isVisible">
+<div class="feedback-container scrollbar" *ngIf="feedback$ | async as feedbackItems; else loading;"
+    [scrollToBottom]="isVisible">
     <ul>
-        <li [ngClass]="{'feedback': feedbackItem.feedbackType === 0, 'oneOnOne':  feedbackItem.feedbackType === 1}" *ngFor="let feedbackItem of feedbackItems">
+        <li [ngClass]="{'feedback': feedbackItem.feedbackType === 0, 'oneOnOne':  feedbackItem.feedbackType === 1}"
+            *ngFor="let feedbackItem of feedbackItems">
             <small>{{feedbackItem.createdOn | date: "mediumDate"}} {{feedbackItem.from}}:</small>
             <div class="message">{{feedbackItem.content}}</div>
         </li>
     </ul>
     <div *ngIf="feedbackItems?.length === 0" class="no-items-created">
         No feedback created yet
+    </div>
+</div>
+<div>
+    <div class="form-row mt-3">
+        <div class="form-group col-md-10 mx-auto">
+            <textarea placeholder="Content" name="content" class="form-control" [(ngModel)]="content" rows="4"
+                style="resize:none" [disabled]="adding"></textarea>
+        </div>
+        <div class="form-group col-md-2 mx-auto">
+            <div><button class="btn feedback-button" (click)="addFeedback()" [disabled]="adding || !content">Add Feedback</button>
+            </div>
+            <div><button class="btn one-on-one-button" (click)="addOneOnOne()" [disabled]="adding || !content">Add One on one</button></div>
+        </div>
     </div>
 </div>
 
