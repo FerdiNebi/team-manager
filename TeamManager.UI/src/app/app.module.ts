@@ -29,6 +29,7 @@ import { LoginComponent } from './login.component';
 import { environment } from 'src/environments/environment';
 import { UserService } from './user.service';
 import { WorkdayImportComponent } from './workday-import/workday-import.component';
+import { PersonResolverService } from './people/person-resolver.service';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,7 @@ import { WorkdayImportComponent } from './workday-import/workday-import.componen
     StoreModule.forRoot({ people: peopleReducer, feedback: feedbackReducer }),
     EffectsModule.forRoot([PeopleEffects, FeedbackEffects])
   ],
-  providers: [PeopleService, FeedbackService, { provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true }, UserService],
+  providers: [PersonResolverService, PeopleService, FeedbackService, { provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true }, UserService],
   entryComponents: [PeopleComponent, PeopleAdministrationComponent, LoginComponent],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,4 @@
-<div class="container">
+<div>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" [routerLink]="[ '/']">Team Manager</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -17,5 +17,7 @@
       <button *ngIf="user" class="btn btn-link pl-1" (click)="logout()">Log out</button>
     </div>
   </nav>
-  <router-outlet *ngIf="!isIframe"></router-outlet>
+  <ng-container *ngIf="!isIframe">
+    <router-outlet></router-outlet>
+  </ng-container>
 </div>
