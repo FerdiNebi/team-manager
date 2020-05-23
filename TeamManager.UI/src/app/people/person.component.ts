@@ -33,15 +33,18 @@ export class PersonComponent implements OnInit, OnDestroy {
 
     constructor(private store: Store<IAppState>, private modalDialogService: ModalDialogService, private element: ElementRef, private route: ActivatedRoute) {
     }
-    
+
     ngOnInit(): void {
         this.route.data
             .subscribe((data: { person: Person }) => {
-                this.person = data.person;
-                this.addFeedbackDialogName = "AddFeedbackDialog" + this.person.id;
-                this.feedback$ = this.store.pipe(select(s => s.feedback[this.person.id]));
-                this.store.dispatch(new GetFeedback(this.person.id));
-            });       
+                this.person = null;
+                setTimeout(() => {
+                    this.person = data.person;
+                    this.addFeedbackDialogName = "AddFeedbackDialog" + this.person.id;
+                    this.feedback$ = this.store.pipe(select(s => s.feedback[this.person.id]));
+                    this.store.dispatch(new GetFeedback(this.person.id));
+                }, 0);
+            });
     }
 
     ngOnDestroy(): void {
@@ -87,7 +90,7 @@ export class PersonComponent implements OnInit, OnDestroy {
         this.subscriptions.push(subscription);
     }
 
-    changeTab(tab: string){
+    changeTab(tab: string) {
         this.currentTab = tab;
     }
 

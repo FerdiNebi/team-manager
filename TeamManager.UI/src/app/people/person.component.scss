@@ -24,18 +24,3 @@
     width: 64.5px;
     height: 38px;
 }
-
-.scrollbar::-webkit-scrollbar-track {
-    border-radius: 10px;
-    background-color: #F5F5F5;
-}
-
-.scrollbar::-webkit-scrollbar {
-    width: 5px;
-    background-color: #F5F5F5;
-}
-
-.scrollbar::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background-color: #ddd;
-}

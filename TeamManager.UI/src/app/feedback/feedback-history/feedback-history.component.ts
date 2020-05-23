@@ -13,6 +13,7 @@ import { GetFeedback } from 'src/app/store/actions/feedback.actions';
 })
 export class FeedbackHistoryComponent implements OnInit {
     @Input() person: Person;
+    @Input() isVisible: boolean = false;
     feedback$: Observable<Feedback[]> = this.store.pipe(select(s => s.feedback[this.person.id]));
 
     constructor(private store: Store<IAppState>) { }

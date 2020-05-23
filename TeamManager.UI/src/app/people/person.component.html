@@ -17,8 +17,8 @@
                     <div><i class="far fa-square square-red"></i> One-on-one</div>
                 </div>
             </div>
-            <div [hidden]="!isFeedbackTabActive()" class="details-container scrollbar" [scrollToBottom]="isFeedbackTabActive()">
-                <feedback-history *ngIf="person" [person]="person"></feedback-history>
+            <div [hidden]="!isFeedbackTabActive()" class="details-container scrollbar" >
+                <feedback-history *ngIf="person" [person]="person" [isVisible]="isFeedbackTabActive()"></feedback-history>
             </div>
         </div>
     </div>

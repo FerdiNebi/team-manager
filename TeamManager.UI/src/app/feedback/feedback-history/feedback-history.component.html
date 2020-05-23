@@ -1,4 +1,4 @@
-<div *ngIf="feedback$ | async as feedbackItems; else loading;">
+<div class="feedback-container scrollbar" *ngIf="feedback$ | async as feedbackItems; else loading;" [scrollToBottom]="isVisible">
     <ul>
         <li [ngClass]="{'feedback': feedbackItem.feedbackType === 0, 'oneOnOne':  feedbackItem.feedbackType === 1}" *ngFor="let feedbackItem of feedbackItems">
             <small>{{feedbackItem.createdOn | date: "mediumDate"}} {{feedbackItem.from}}:</small>
