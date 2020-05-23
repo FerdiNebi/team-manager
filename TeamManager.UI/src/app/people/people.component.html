@@ -1,6 +1,6 @@
-<sidebar-layout *ngIf="!loading">
+<sidebar-layout *ngIf="!loading && people$ | async as people">
   <div class="sidebar-content people-list">
-    <div class="people-list-item" *ngFor="let person of people$ | async">
+    <div class="people-list-item" *ngFor="let person of people">
       <a routerLink="/people/{{person.id}}" routerLinkActive="active">
         <div title="{{person.name}}">
           <i class="fas fa-user-alt"></i>
@@ -8,8 +8,11 @@
         </div>
       </a>
     </div>
+    <div class="empty-people-list" *ngIf="people.length === 0">
+      No people added
+    </div>
   </div>
-  <div class="page-content" *ngIf="people$ | async as people">
+  <div class="page-content">
     <div *ngIf="people.length === 0" class="d-flex justify-content-center">
       <a class="btn btn-link px-5 mb-4" [routerLink]="['/administration']">
         Add people
