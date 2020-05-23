@@ -1,6 +1,37 @@
-.people-list {
-    margin-top: 60px;
-    li {
-        margin-bottom: 15px;
+.people-list{
+    margin-top: 3rem;
+    text-align: left;
+    font-size: 1rem;
+    line-height: 2rem;
+
+    .people-list-item:hover {
+        background-color: darken($color: #f8f9fa, $amount: 5);
+    }
+
+    a {
+        color: rgba(0,0,0,0.5);
+        i {
+            margin-right:2.2rem;
+            margin-left:1rem;
+            color: rgba(0,0,0,0.5);
+        }        
+    }
+
+    .active {
+        color: rgba(0,0,0,0.9);
+        i {
+            color: rgba(0,0,0,0.9);
+        }
+    }
+
+    a:hover {
+        text-decoration: none;
+        cursor: pointer;
     }
 }
+
+.empty-people-list{
+    text-align: center;
+    color: rgba(0,0,0,0.5);
+}
+

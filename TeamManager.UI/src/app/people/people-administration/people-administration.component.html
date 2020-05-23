@@ -1,17 +1,31 @@
-<ul class="nav nav-tabs admin-menu">
-  <li class="nav-item">
-    <a class="nav-link cursor-pointer" [class.active]="action === 'AddPerson'" (click)="action = 'AddPerson'">Add a person</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link cursor-pointer" [class.active]="action === 'RemovePerson'" (click)="action = 'RemovePerson'">Remove a person</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link cursor-pointer" [class.active]="action === 'ImportFromWorkday'" (click)="action = 'ImportFromWorkday'">Import from Workday</a>
-  </li>
-</ul>
-
-<div class="admin-body">
-    <people-create (personAdded)="personAdded($event)" [hidden]="action != 'AddPerson'"></people-create>
-    <workday-import [hidden]="action != 'ImportFromWorkday'"></workday-import>
-    <people-delete (personDeleted)="personDeleted($event)" [hidden]="action != 'RemovePerson'"></people-delete>
-</div>
+<sidebar-layout *ngIf="!loading">
+  <div class="sidebar-content">
+    <div class="settings-list">
+      <a [class.active]="action === 'AddPerson'" (click)="action = 'AddPerson'">
+        <div>
+          <i class="fas fa-user-plus"></i>
+          Add a person
+        </div>
+      </a>
+      <a [class.active]="action === 'RemovePerson'" (click)="action = 'RemovePerson'">
+        <div>
+          <i class="fas fa-user-minus"></i>
+          Remove a person
+        </div>
+      </a>
+      <a [class.active]="action === 'ImportFromWorkday'" (click)="action = 'ImportFromWorkday'">
+        <div>
+          <i class="fas fa-users"></i>
+          Import from Workday
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="admin-body">
+      <people-create (personAdded)="personAdded($event)" [hidden]="action != 'AddPerson'"></people-create>
+      <workday-import [hidden]="action != 'ImportFromWorkday'"></workday-import>
+      <people-delete (personDeleted)="personDeleted($event)" [hidden]="action != 'RemovePerson'"></people-delete>
+    </div>
+  </div>
+</sidebar-layout>

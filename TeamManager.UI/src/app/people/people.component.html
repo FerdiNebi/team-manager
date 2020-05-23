@@ -1,16 +1,32 @@
-<ul class="list-group people-list">
-  <li class="list-group-item" *ngFor="let person of people$ | async">
-    <person [person]="person"></person>
-  </li>
-</ul>
-<ng-container *ngIf="people$ | async as people">
-  <div *ngIf="people.length === 0" class="d-flex justify-content-center">
-    <a class="btn btn-link px-5 mb-4" [routerLink]="['/administration']">
-      Add people
-    </a>
-    <span class="pt-2">or</span>
-    <a class="btn btn-link px-5 mb-4" [routerLink]="['/administration']" [queryParams]="{tab: 'import'}">
-      Import from Workday
-    </a>
+<sidebar-layout *ngIf="!loading && people$ | async as people">
+  <div class="sidebar-content people-list">
+    <div class="people-list-item" *ngFor="let person of people">
+      <a routerLink="/people/{{person.id}}" routerLinkActive="active">
+        <div title="{{person.name}}">
+          <i class="fas fa-user-alt"></i>
+          {{ person.name | shortenName }}
+        </div>
+      </a>
+    </div>
+    <div class="empty-people-list" *ngIf="people.length === 0">
+      No people added
+    </div>
   </div>
-</ng-container>
+  <div class="page-content">
+    <div *ngIf="people.length === 0" class="d-flex justify-content-center">
+      <a class="btn btn-link px-5 mb-4" [routerLink]="['/administration']">
+        Add people
+      </a>
+      <span class="pt-2">or</span>
+      <a class="btn btn-link px-5 mb-4" [routerLink]="['/administration']" [queryParams]="{tab: 'import'}">
+        Import from Workday
+      </a>
+    </div>
+    <div *ngIf="people.length > 0">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</sidebar-layout>
+<div *ngIf="loading" class="spinner-border text-secondary center-loader" role="status">
+  <span class="sr-only">Loading...</span>
+</div>

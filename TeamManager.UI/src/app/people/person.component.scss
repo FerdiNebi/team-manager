@@ -17,39 +17,10 @@
 .person-name {
     font-size: 1.5em;
     font-weight: 400;
-    font-family: cursive;
     margin-bottom: 20px;
 }
 
 .btn {
     width: 64.5px;
     height: 38px;
-}
-
-.details-container {
-    position: relative;
-    margin-top: 10px;
-    height: 710px;
-    overflow-y: auto;
-}
-
-@media screen and (max-height: 850px) {
-    .details-container {
-        height: 600px;
-    }
-}
-
-.scrollbar::-webkit-scrollbar-track {
-    border-radius: 10px;
-    background-color: #F5F5F5;
-}
-
-.scrollbar::-webkit-scrollbar {
-    width: 5px;
-    background-color: #F5F5F5;
-}
-
-.scrollbar::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background-color: #ddd;
 }

@@ -6,3 +6,34 @@
     margin-top: 30px;
 }
 
+.settings-list {
+    margin-top: 3rem;
+    text-align: left;
+    font-size: 1rem;
+    line-height: 2rem;
+
+    a>div:hover {
+        background-color: darken($color: #f8f9fa, $amount: 5);
+    }
+
+    a {
+        color: rgba(0,0,0,0.5);
+        i {
+            margin-right:2.2rem;
+            margin-left:1rem;
+            color: rgba(0,0,0,0.5);
+        }        
+    }
+
+    .active {
+        color: rgba(0,0,0,0.9);
+        i {
+            color: rgba(0,0,0,0.9);
+        }
+    }
+
+    a:hover {
+        text-decoration: none;
+        cursor: pointer;
+    }
+}

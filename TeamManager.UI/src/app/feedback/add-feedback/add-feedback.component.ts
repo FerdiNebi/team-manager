@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { AddFeedbackModel, Feedback } from '../feedback';
 import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/store/state/app-state';
@@ -13,7 +13,7 @@ import * as feedbackActions from '../../store/actions/feedback.actions';
   templateUrl: './add-feedback.component.html',
   styleUrls: ['./add-feedback.component.scss']
 })
-export class AddFeedbackComponent implements OnInit {
+export class AddFeedbackComponent implements OnInit, OnDestroy {
   @Input() title: string;
   @Input() addFeedbackModel: AddFeedbackModel;
   @Output() completed: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -42,10 +42,16 @@ export class AddFeedbackComponent implements OnInit {
 
   addFeedback(form) {
     this.creating = true;
-    this.store.dispatch(new AddFeedback(this.feedbackItem));    
+    this.store.dispatch(new AddFeedback(this.feedbackItem));
   }
 
   cancel() {
     this.completed.emit(false);
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }

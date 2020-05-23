@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef, ElementRef, ViewContainerRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, ElementRef, ViewContainerRef, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { OverlayRef, Overlay } from '@angular/cdk/overlay';
 import { Subscription, fromEvent } from 'rxjs';
 import { TemplatePortal } from '@angular/cdk/portal';
@@ -12,7 +12,7 @@ declare var $: any;
     templateUrl: './calendar.component.html',
     styleUrls: ['./calendar.component.scss']
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, OnChanges {
     overlayRef: OverlayRef | null;
     private subscription: Subscription;
     @Input() person: Person;
@@ -25,7 +25,23 @@ export class CalendarComponent implements OnInit {
     constructor(public overlay: Overlay,
         public viewContainerRef: ViewContainerRef) { }
 
-    ngOnInit(): void {
+    ngOnInit(): void { }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes.person) {
+            this.initializeCalendar();
+        }
+    }
+
+    contextMenuActionClick(action, data) {
+        this.close();
+        this.contextMenuActionClicked.emit({
+            action: action,
+            data: data
+        });
+    }
+
+    private initializeCalendar() {
         const that = this;
         $(this.calendarElement.nativeElement).calendar({
             maxDate: new Date(),
@@ -33,7 +49,7 @@ export class CalendarComponent implements OnInit {
             style: "background",
             customDayRenderer: function (element, date) {
                 if (that.dayRendered) {
-                    that.dayRendered.emit({element, date});
+                    that.dayRendered.emit({ element, date });
                 }
             },
             dayContextMenu: function (e) {
@@ -74,16 +90,6 @@ export class CalendarComponent implements OnInit {
             },
             contextMenuItems: [
             ],
-        });
-
-        // $(`#${person.id}`).data('calendar').setDataSource(dataSource);
-    }
-
-    contextMenuActionClick(action, data) {
-        this.close();
-        this.contextMenuActionClicked.emit({
-            action: action,
-            data: data
         });
     }
 

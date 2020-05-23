@@ -7,6 +7,7 @@ import { Feedback, AddFeedbackModel, FeedbackType } from '../feedback/feedback';
 import { GetFeedback } from '../store/actions/feedback.actions';
 import { ModalDialogService } from '../services/modal-dialog.service';
 import { first } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 declare var $: any
 const CALENDAR_TAB_NAME = "calendar";
@@ -18,32 +19,32 @@ const FEEDBACK_TAB_NAME = "feedback";
     styleUrls: ['./person.component.scss']
 })
 export class PersonComponent implements OnInit, OnDestroy {
-    private _person: Person;
-    @Input()
-    set person(person: Person) {
-        this.addFeedbackDialogName = "AddFeedbackDialog" + person.id;
-        this._person = person;
-    }
-
-    get person(): Person {
-        return this._person;
-    }
-
-    feedback$: Observable<Feedback[]> = this.store.pipe(select(s => s.feedback[this.person.id]));
+    feedback$: Observable<Feedback[]>;
     addFeedbackDialogName: string;
     addFeedbackModel: AddFeedbackModel;
     addActionName: string;
     calendarInitialized: boolean;
     detailsVisible: boolean;
     currentTab: string = CALENDAR_TAB_NAME;
+    person: Person;
 
     calendarContextMenuActions = ['Add feedback', 'Add one-on-one'];
     private subscriptions: Subscription[] = [];
 
-    constructor(private store: Store<IAppState>, private modalDialogService: ModalDialogService, private element: ElementRef) { }
+    constructor(private store: Store<IAppState>, private modalDialogService: ModalDialogService, private element: ElementRef, private route: ActivatedRoute) {
+    }
 
     ngOnInit(): void {
-        this.store.dispatch(new GetFeedback(this.person.id));
+        this.route.data
+            .subscribe((data: { person: Person }) => {
+                this.person = null;
+                setTimeout(() => {
+                    this.person = data.person;
+                    this.addFeedbackDialogName = "AddFeedbackDialog" + this.person.id;
+                    this.feedback$ = this.store.pipe(select(s => s.feedback[this.person.id]));
+                    this.store.dispatch(new GetFeedback(this.person.id));
+                }, 0);
+            });
     }
 
     ngOnDestroy(): void {
@@ -69,18 +70,6 @@ export class PersonComponent implements OnInit, OnDestroy {
         this.addFeedbackModel = null;
     }
 
-    toggleDetails() {
-        if (!this.detailsVisible) {
-            this.detailsVisible = true;
-            this.calendarInitialized = true;
-            interval(10).pipe(first()).subscribe(() => {
-                this.element.nativeElement.scrollIntoView(true);
-            });            
-        } else {
-            this.detailsVisible = false;
-        }
-    }
-
     dayRendered(e) {
         var that = this;
         function updateCalendarFunction() {
@@ -101,11 +90,8 @@ export class PersonComponent implements OnInit, OnDestroy {
         this.subscriptions.push(subscription);
     }
 
-    changeTab(tab: string){
+    changeTab(tab: string) {
         this.currentTab = tab;
-        interval(10).pipe(first()).subscribe(() => {
-            this.element.nativeElement.scrollIntoView(true);
-        }); 
     }
 
     isCalendarTabActive() {

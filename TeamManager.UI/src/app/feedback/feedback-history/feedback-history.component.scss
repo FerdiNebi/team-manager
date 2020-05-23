@@ -49,11 +49,29 @@ ul li {
 }
 
 .no-items-created {
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    padding-top: 15rem;
+    text-align: center;
+}
+
+.feedback-container {
+    height: 65vh;
+    overflow-y: scroll;
+    margin-top: 1rem;
+}
+
+button {
+    width: 100%;
+    height: 3rem;
+    color: #fff;
+}
+
+button.feedback-button {
+    background: #0099FF;
+}
+
+button.one-on-one-button {
+    margin-top: 0.6rem;
+    background: #FA3C4C;
 }
 
 // .him+.me {

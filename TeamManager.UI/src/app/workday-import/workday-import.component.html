@@ -1,12 +1,17 @@
-<p>Import an xlsx file exported from Workday.</p>
+<div class="container">
+    <div class="col-4 nopadding">
+        <h1>Import</h1>
+        <p>Import an xlsx file exported from Workday.</p>
 
-<input type="file" (change)="addfile($event)" [disabled]="importing" #fileInput />
+        <input type="file" (change)="addfile($event)" [disabled]="importing" #fileInput />
 
-<button type="submit" class="btn btn-success" (click)="import()" [disabled]="!feedbackList || importing">
-    <span *ngIf="importing">
-        Importing...
-    </span>
-    <span *ngIf="!importing">
-        Import
-    </span>
-</button>
+        <button type="submit" class="btn btn-success" (click)="import()" [disabled]="!feedbackList || importing">
+            <span *ngIf="importing">
+                Importing...
+            </span>
+            <span *ngIf="!importing">
+                Import
+            </span>
+        </button>
+    </div>
+</div>
