@@ -1,0 +1,17 @@
+<div class="d-flex" id="wrapper" [class.toggled]="toggled">
+    <div class="bg-light border-right" id="sidebar-wrapper">
+        <div class="list-group list-group-flush">
+            <div class="toggle-button" (click)="toggle()"> <i class="fas fa-bars"></i></div>
+
+            <!-- Sidebar content -->
+            <ng-content select=".sidebar-content"></ng-content>
+        </div>
+    </div>
+    <div id="page-content-wrapper">
+
+        <div class="container-fluid">
+            <!-- Page content -->
+            <ng-content select=".page-content"></ng-content>
+        </div>
+    </div>
+</div>

@@ -9,24 +9,31 @@ import { PersonResolverService } from './people/person-resolver.service';
 
 
 const routes: Routes = [
-  { path: '',  component: LoginComponent },
-  { path: 'people', 
-    component: PeopleComponent, 
-    canActivate : [MsalGuard],
+  { path: '', component: LoginComponent },
+  {
+    path: 'people',
+    component: PeopleComponent,
+    canActivate: [MsalGuard],
+  },
+  {
+    path: 'people/:id',
+    component: PeopleComponent,
+    canActivate: [MsalGuard],
     children: [
       {
-        path: ':id',
+        path: '',
         component: PersonComponent,
         resolve: {
           person: PersonResolverService
-        }        
+        }
       }
-    ]},
-  { path: 'administration', component: PeopleAdministrationComponent, canActivate : [MsalGuard]}
+    ]
+  },
+  { path: 'administration', component: PeopleAdministrationComponent, canActivate: [MsalGuard] }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

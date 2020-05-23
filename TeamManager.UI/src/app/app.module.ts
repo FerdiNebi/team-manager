@@ -30,6 +30,7 @@ import { environment } from 'src/environments/environment';
 import { UserService } from './user.service';
 import { WorkdayImportComponent } from './workday-import/workday-import.component';
 import { PersonResolverService } from './people/person-resolver.service';
+import { SidebarLayoutComponent } from './shared/sidebar-layout/sidebar-layout/sidebar-layout.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { PersonResolverService } from './people/person-resolver.service';
     FeedbackHistoryComponent,
     ScrollToBottomDirective,
     LoginComponent,
-    WorkdayImportComponent
+    WorkdayImportComponent,
+    SidebarLayoutComponent
   ],
   imports: [
     MsalModule.forRoot({

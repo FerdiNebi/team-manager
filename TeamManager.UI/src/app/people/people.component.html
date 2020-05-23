@@ -1,24 +1,29 @@
-<div class="d-flex toggled" id="wrapper">
-  <div class="bg-light border-right" id="sidebar-wrapper">
-    <div class="list-group list-group-flush">
-      <a *ngFor="let person of people$ | async" routerLink="{{person.id}}">{{ person.name }}</a>
+<sidebar-layout *ngIf="!loading">
+  <div class="sidebar-content people-list">
+    <div class="people-list-item" *ngFor="let person of people$ | async">
+      <a routerLink="/people/{{person.id}}" routerLinkActive="active">
+        <div>
+          <i class="fas fa-user-alt"></i>
+          {{ person.name }}
+        </div>
+      </a>
     </div>
   </div>
-  <div id="page-content-wrapper">
-    <div id="menu-toggle">Toggle</div>
-    <div class="container-fluid" *ngIf="people$ | async as people">
-        <div *ngIf="people.length === 0" class="d-flex justify-content-center">
-          <a class="btn btn-link px-5 mb-4" [routerLink]="['/administration']">
-            Add people
-          </a>
-          <span class="pt-2">or</span>
-          <a class="btn btn-link px-5 mb-4" [routerLink]="['/administration']" [queryParams]="{tab: 'import'}">
-            Import from Workday
-          </a>
-        </div>
-        <div *ngIf="people.length > 0">
-          <router-outlet></router-outlet>
-        </div>
+  <div class="page-content" *ngIf="people$ | async as people">
+    <div *ngIf="people.length === 0" class="d-flex justify-content-center">
+      <a class="btn btn-link px-5 mb-4" [routerLink]="['/administration']">
+        Add people
+      </a>
+      <span class="pt-2">or</span>
+      <a class="btn btn-link px-5 mb-4" [routerLink]="['/administration']" [queryParams]="{tab: 'import'}">
+        Import from Workday
+      </a>
+    </div>
+    <div *ngIf="people.length > 0">
+      <router-outlet></router-outlet>
     </div>
   </div>
+</sidebar-layout>
+<div *ngIf="loading" class="spinner-border text-secondary center-loader" role="status">
+  <span class="sr-only">Loading...</span>
 </div>
