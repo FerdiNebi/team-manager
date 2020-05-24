@@ -22,4 +22,8 @@ export class FeedbackService {
     addBatchFeedback(batchFeedback: Feedback[]): Observable<any> {
         return this.http.post<any>(this.ServiceUrl + "/batchCreate", batchFeedback);
     }
+
+    deleteFeedback(feedbackId: string): Observable<any> {
+        return this.http.delete(this.ServiceUrl + "/" + feedbackId);
+    }
 }

@@ -20,13 +20,16 @@ namespace TeamManager.FeedbackService.Services
         public async Task<FeedbackViewModel> CreateAsync(FeedbackViewModel feedbackViewModel)
         {
             var feedback = new Feedback(feedbackViewModel);
-            if (!this.context.Feedbacks.Any(f => f.PersonId == feedback.PersonId && f.From == feedback.From && f.Content == feedback.Content))
+
+            var existingFeedback = this.context.Feedbacks.Where(f => f.PersonId == feedback.PersonId && f.From == feedback.From && f.Content == feedback.Content).ToList();
+            if (!existingFeedback.Any(ef => ef.CreatedOn.Day == feedback.CreatedOn.Day && ef.CreatedOn.Month == feedback.CreatedOn.Month && ef.CreatedOn.Year == feedback.CreatedOn.Year))
             {
                 this.context.Add(feedback);
                 await this.context.SaveChangesAsync();
+                return new FeedbackViewModel(feedback);
             }
 
-            return new FeedbackViewModel(feedback);
+            throw new ArgumentException("Feedback already exists");
         }
 
         public async Task<bool> DeleteAsync(Guid feedbackId)
@@ -61,11 +64,11 @@ namespace TeamManager.FeedbackService.Services
 
         public async Task<bool> DeleteAllForPersonAsync(Guid personId)
         {
-             var feedbackItems = this.context.Feedbacks.Where(f => f.PersonId == personId);
-             this.context.RemoveRange(feedbackItems);
-             
-             await this.context.SaveChangesAsync();
-             return true;
+            var feedbackItems = this.context.Feedbacks.Where(f => f.PersonId == personId);
+            this.context.RemoveRange(feedbackItems);
+
+            await this.context.SaveChangesAsync();
+            return true;
         }
     }
 }

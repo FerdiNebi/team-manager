@@ -5,7 +5,6 @@ import { Store, select } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { GetPeople } from '../store/actions/people.actions';
 import { MsalService } from '@azure/msal-angular';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
