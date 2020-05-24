@@ -8,6 +8,7 @@ import { GetFeedback, AddFeedback } from 'src/app/store/actions/feedback.actions
 import { Actions, ofType } from '@ngrx/effects';
 import * as feedbackActions from '../../store/actions/feedback.actions';
 import { ScrollToBottomDirective } from 'src/app/shared/scroll-to-bottom.directive';
+import { ModalDialogService } from 'src/app/services/modal-dialog.service';
 
 @Component({
     selector: 'feedback-history',
@@ -19,26 +20,36 @@ export class FeedbackHistoryComponent implements OnInit, OnDestroy {
     @Input() isVisible: boolean = false;
     @ViewChild(ScrollToBottomDirective, { static: false }) scrollToBottomDirective: ScrollToBottomDirective;
     adding: boolean;
+    deleting: boolean;
     content: string = null;
+    readonly deleteConfirmationDialogName: string = "delete-feedback-confirmation";
     feedback$: Observable<Feedback[]> = this.store.pipe(select(s => s.feedback[this.person.id]));
-    private subscription: Subscription;
+    private subscriptions: Subscription[] = [];
+    private feedbackToDelete: Feedback = null;
 
-    constructor(private store: Store<IAppState>, private actions$: Actions) { }
+    constructor(private store: Store<IAppState>, private actions$: Actions, private modalService: ModalDialogService) { }
 
     ngOnInit(): void {
         this.store.dispatch(new GetFeedback(this.person.id));
-        this.subscription = this.actions$.pipe(
+        this.subscriptions.push(this.actions$.pipe(
             ofType(feedbackActions.FeedbackActionTypes.AddFeedbackSuccess)
         ).subscribe(f => {
             this.content = null;
             this.adding = false;
-            debugger;
             if (this.scrollToBottomDirective) {
                 setTimeout(() => {
                     this.scrollToBottomDirective.scrollToBottom();
                 }, 0);
             }
-        });
+        }));
+
+        this.subscriptions.push(this.actions$.pipe(
+            ofType(feedbackActions.FeedbackActionTypes.DeleteFeedbackSuccess)
+        ).subscribe(f => {
+            this.feedbackToDelete = null;
+            this.deleting = false;
+            this.modalService.close(this.deleteConfirmationDialogName);
+        }));
     }
 
     addFeedback() {
@@ -49,10 +60,24 @@ export class FeedbackHistoryComponent implements OnInit, OnDestroy {
         this.addItem(FeedbackType.OneOnOne);
     }
 
-    ngOnDestroy(): void {
-        if (this.subscription) {
-            this.subscription.unsubscribe();
+    deleteFeedback(feedbackItem: Feedback) {
+        this.feedbackToDelete = feedbackItem;
+        this.modalService.open(this.deleteConfirmationDialogName);
+    }
+
+    confirmDeleteFeedback() {
+        if (this.feedbackToDelete) {
+            this.deleting = true;
+            this.store.dispatch(new feedbackActions.DeleteFeedback(this.feedbackToDelete.id));
         }
+    }
+
+    cancel() {
+        this.modalService.close(this.deleteConfirmationDialogName);
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
     private addItem(type: FeedbackType) {

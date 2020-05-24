@@ -46,6 +46,19 @@ export function feedbackReducer(state = initialState, action: feedbackActions.Fe
             return newState;
         }
 
+        case feedbackActions.FeedbackActionTypes.DeleteFeedbackSuccess: {
+            const newState = duplicateState(state);
+            const deletedFeedbackId = action.feedbackId;
+
+            for (const personId in newState) {
+                if (newState.hasOwnProperty(personId)) {
+                    newState[personId] = newState[personId].filter(f => f.id !== deletedFeedbackId);                    
+                }
+            }
+
+            return newState;
+        }
+
         default: {
             return state;
         }

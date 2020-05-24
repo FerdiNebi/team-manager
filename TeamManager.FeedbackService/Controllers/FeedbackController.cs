@@ -64,13 +64,14 @@ namespace TeamManager.FeedbackService.Controllers
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(Guid id, [FromBody] string value)
         {
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(Guid id)
         {
+            await this.service.DeleteAsync(id);
         }
     }
 }
