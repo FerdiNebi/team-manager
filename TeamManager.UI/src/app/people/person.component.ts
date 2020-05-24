@@ -76,12 +76,19 @@ export class PersonComponent implements OnInit, OnDestroy {
             var element = e.element;
             var date = new Date(e.date);
             return function (feedback) {
+                let updated = false;
                 if (feedback && feedback.some(f => f.feedbackType === 0 && that.isSameDay(f.createdOn, date))) {
                     $(element).css('border', '2px solid blue');
+                    updated = true;
                 }
 
                 if (feedback && feedback.some(f => f.feedbackType === 1 && that.isSameDay(f.createdOn, date))) {
                     $(element).css('border', '2px solid red');
+                    updated = true;
+                }
+
+                if (!updated) {
+                    $(element).css('border', '0px');
                 }
             };
         }
