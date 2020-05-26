@@ -30,7 +30,6 @@ export class FeedbackHistoryComponent implements OnInit, OnDestroy {
     constructor(private store: Store<IAppState>, private actions$: Actions, private modalService: ModalDialogService) { }
 
     ngOnInit(): void {
-        this.store.dispatch(new GetFeedback(this.person.id));
         this.subscriptions.push(this.actions$.pipe(
             ofType(feedbackActions.FeedbackActionTypes.AddFeedbackSuccess)
         ).subscribe(f => {

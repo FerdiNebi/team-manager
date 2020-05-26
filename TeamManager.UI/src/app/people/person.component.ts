@@ -38,11 +38,19 @@ export class PersonComponent implements OnInit, OnDestroy {
         this.route.data
             .subscribe((data: { person: Person }) => {
                 this.person = null;
+                for (let i = 0; i < this.subscriptions.length; i++) {
+                    const subscription = this.subscriptions[i];
+                    subscription.unsubscribe();
+                }
+
+                this.subscriptions = [];
+
                 setTimeout(() => {
                     this.person = data.person;
-                    this.addFeedbackDialogName = "AddFeedbackDialog" + this.person.id;
-                    this.feedback$ = this.store.pipe(select(s => s.feedback[this.person.id]));
-                    this.store.dispatch(new GetFeedback(this.person.id));
+                    const personId = this.person.id;
+                    this.addFeedbackDialogName = "AddFeedbackDialog" + personId;
+                    this.feedback$ = this.store.pipe(select(s => s.feedback[personId]));
+                    this.store.dispatch(new GetFeedback(personId));
                 }, 0);
             });
     }

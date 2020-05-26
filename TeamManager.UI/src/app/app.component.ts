@@ -11,18 +11,23 @@ import { AuthError, AuthResponse, Logger, CryptoUtils } from 'msal';
 export class AppComponent implements OnInit, OnDestroy {
   user: any;
   isIframe = false;
-  private subscription: Subscription;
+  private subscriptions: Subscription[] = [];
   constructor(private broadcastService: BroadcastService, private authService: MsalService) {
   }
 
   ngOnInit(): void {
     this.isIframe = window !== window.parent && !window.opener;
 
-    this.subscription = this.broadcastService.subscribe("msal:acquireTokenSuccess", (payload) => {
+    this.subscriptions.push(this.broadcastService.subscribe("msal:acquireTokenSuccess", (payload) => {
       if (payload) {
         this.user = payload.idToken;
       }
-    });
+    }));
+
+    this.subscriptions.push(this.broadcastService.subscribe('msal:loginFailure', () => {
+      this.authService.loginRedirect();
+      console.log("Redirect after login failure.");
+    }));
 
     this.authService.handleRedirectCallback((redirectError: AuthError, redirectResponse: AuthResponse) => {
       if (redirectError) {
@@ -47,8 +52,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
+    for (let i = 0; i < this.subscriptions.length; i++) {
+      const subscription = this.subscriptions[i];
+      subscription.unsubscribe();
     }
   }
 }

@@ -33,6 +33,8 @@ import { PersonResolverService } from './people/person-resolver.service';
 import { SidebarLayoutComponent } from './shared/sidebar-layout/sidebar-layout/sidebar-layout.component';
 import { ShortenNamePipe } from './shared/pipes/shorten-name.pipe';
 
+const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,8 +62,8 @@ import { ShortenNamePipe } from './shared/pipes/shorten-name.pipe';
         postLogoutRedirectUri: environment.appUrl,
       },
       cache: {
-        cacheLocation: "sessionStorage",
-        storeAuthStateInCookie: true, // set to true for IE 11
+        cacheLocation: "localStorage",
+        storeAuthStateInCookie: isIE, // set to true for IE 11
       }
     }, {
       popUp: false,

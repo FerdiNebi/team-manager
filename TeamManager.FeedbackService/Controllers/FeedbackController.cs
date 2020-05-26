@@ -40,8 +40,8 @@ namespace TeamManager.FeedbackService.Controllers
         {
             if (this.ModelState.IsValid)
             {
-                await this.service.CreateAsync(feedback);
-                return CreatedAtRoute(string.Empty, feedback);
+                var createdFeedback = await this.service.CreateAsync(feedback);
+                return CreatedAtRoute(string.Empty, createdFeedback);
             }
 
             return BadRequest();

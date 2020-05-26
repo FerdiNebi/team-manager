@@ -83,6 +83,9 @@ export class WorkdayImportComponent implements OnInit {
   }
 
   private importFeedbackForPerson(person: Person) {
+    if (!this.feedbackList)
+      return;
+
     let batchFeedback: Feedback[] = [];
     for (let i = 0; i < this.feedbackList.length; i++) {
       const feedback = this.feedbackList[i];
