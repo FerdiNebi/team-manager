@@ -22,6 +22,10 @@ namespace TeamManager.Shared
                 {
                     var logger = services.GetRequiredService<ILogger<Program>>();
                     logger.LogError(ex, "An error occurred while migrating the database.");
+
+                    System.Threading.Thread.Sleep(15000);
+                    var db = services.GetRequiredService<T>();
+                    db.Database.Migrate();
                 }
             }
             return host;
