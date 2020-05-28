@@ -9,6 +9,8 @@
 Note: Docker will require Firewall access and will require File sharing which will appear as notification. File sharing can be done from
 Docker Settings => Resources => File sharing: you need to share the directory of the project.
 
+When ready, browse: http://localhost:4200
+
 Debugging:
 To debug one of the services, build and run it as is, without using a container.
 Change configuration.json in TeamManager.ApiGateway/configuration to send requests to the running instance using "host.docker.internal:5000" url
