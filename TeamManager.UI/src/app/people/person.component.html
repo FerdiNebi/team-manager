@@ -2,24 +2,20 @@
     <div>
         <h1 class="person-name cursor-pointer">{{ person.name }}</h1>
         <div>
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link cursor-pointer" [ngClass]="{ 'active': isCalendarTabActive() }" (click)="changeTab('calendar')">Calendar</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link cursor-pointer" [ngClass]="{ 'active': isFeedbackTabActive() }" (click)="changeTab('feedback')">Feedback</a>
-                </li>
-            </ul>
-            <div [hidden]="!isCalendarTabActive()" class="details-container scrollbar">
-                <calendar [person]="person" [contextMenuActions]="calendarContextMenuActions" (contextMenuActionClicked)="onContextMenuActionClicked($event)" (dayRendered)="dayRendered($event)"></calendar>
-                <div class="legend">
-                    <div><i class="far fa-square square-blue"></i> Feedback</div>
-                    <div><i class="far fa-square square-red"></i> One-on-one</div>
-                </div>
-            </div>
-            <div [hidden]="!isFeedbackTabActive()" class="details-container scrollbar" >
-                <feedback-history *ngIf="person" [person]="person" [isVisible]="isFeedbackTabActive()"></feedback-history>
-            </div>
+            <mat-tab-group mat-align-tabs="start">
+                <mat-tab label="Calendar">
+                    <div>                        
+                        <calendar [person]="person" [contextMenuActions]="calendarContextMenuActions" (contextMenuActionClicked)="onContextMenuActionClicked($event)" (dayRendered)="dayRendered($event)"></calendar>
+                        <div class="legend">
+                            <div><i class="far fa-square square-blue"></i> Feedback</div>
+                            <div><i class="far fa-square square-red"></i> One-on-one</div>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Feedback">
+                    <feedback-history *ngIf="person" [person]="person" ></feedback-history>  
+                </mat-tab>
+            </mat-tab-group>
         </div>
     </div>
 </div>

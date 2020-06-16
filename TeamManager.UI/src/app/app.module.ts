@@ -32,6 +32,8 @@ import { WorkdayImportComponent } from './workday-import/workday-import.componen
 import { PersonResolverService } from './people/person-resolver.service';
 import { SidebarLayoutComponent } from './shared/sidebar-layout/sidebar-layout/sidebar-layout.component';
 import { ShortenNamePipe } from './shared/pipes/shorten-name.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTabsModule } from '@angular/material/tabs';
 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
@@ -54,6 +56,7 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     ShortenNamePipe
   ],
   imports: [
+    MatTabsModule,
     MsalModule.forRoot({
       auth: {
         clientId: "7f691190-b6d4-42f9-996f-21c64aa7d1ad",
@@ -63,7 +66,6 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
       },
       cache: {
         cacheLocation: "localStorage",
-        storeAuthStateInCookie: isIE, // set to true for IE 11
       }
     }, {
       popUp: false,
@@ -81,7 +83,8 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     FormsModule,
     OverlayModule,
     StoreModule.forRoot({ people: peopleReducer, feedback: feedbackReducer }),
-    EffectsModule.forRoot([PeopleEffects, FeedbackEffects])
+    EffectsModule.forRoot([PeopleEffects, FeedbackEffects]),
+    BrowserAnimationsModule
   ],
   providers: [PersonResolverService, PeopleService, FeedbackService, { provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true }, UserService],
   entryComponents: [PeopleComponent, PeopleAdministrationComponent, LoginComponent],
