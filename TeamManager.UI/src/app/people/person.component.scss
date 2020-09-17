@@ -7,6 +7,13 @@
     .square-red {
         color: red;
     }
+
+    .legend-text{
+        width: 100px;
+        float: right;
+        clear: both;
+        text-align: left;
+    }
 }
 
  ::ng-deep .tm-modal-dialog-body {

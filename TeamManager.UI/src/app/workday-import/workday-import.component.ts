@@ -17,8 +17,8 @@ import { FeedbackType, Feedback } from '../feedback/feedback';
 export class WorkdayImportComponent implements OnInit {
 
   importing = false;
-  private importedPeopleCount: number = 0;
-  private totalPeopleToImport: number = 0;
+  private importedPeopleCount = 0;
+  private totalPeopleToImport = 0;
   private feedbackList: any[];
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
 
@@ -35,19 +35,20 @@ export class WorkdayImportComponent implements OnInit {
 
   addfile(event) {
     const file = event.target.files[0];
-    let fileReader = new FileReader();
+    const fileReader = new FileReader();
     fileReader.readAsArrayBuffer(file);
     fileReader.onload = (e) => {
       const arrayBuffer = fileReader.result as ArrayBuffer;
-      var data = new Uint8Array(arrayBuffer);
-      var arr = new Array();
-      for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
-      var bstr = arr.join("");
-      var workbook = XLSX.read(bstr, { type: "binary" });
-      var first_sheet_name = workbook.SheetNames[0];
-      var worksheet = workbook.Sheets[first_sheet_name];
-      this.feedbackList = XLSX.utils.sheet_to_json(worksheet, { range: "A3:J10000" });
-    }
+      let data = new Uint8Array(arrayBuffer);
+      let arr = new Array();
+      for (let i = 0; i != data.length; ++i) { arr[i] = String.fromCharCode(data[i]); }
+      let bstr = arr.join('');
+      let workbook = XLSX.read(bstr, { type: 'binary' });
+      let first_sheet_name = workbook.SheetNames[0];
+      let worksheet = workbook.Sheets[first_sheet_name];
+      const range = worksheet['A2'] ? 'A2:J10000' : 'A3:J10000';
+      this.feedbackList = XLSX.utils.sheet_to_json(worksheet, { range });
+    };
   }
 
   import() {
@@ -64,10 +65,10 @@ export class WorkdayImportComponent implements OnInit {
 
       for (let i = 0; i < this.feedbackList.length; i++) {
         const feedback = this.feedbackList[i];
-        const personName = feedback["About"];
+        const personName = feedback['About'];
         if (personName && !peopleIdsByName[personName]) {
           this.store.dispatch(new peopleActions.AddPerson(personName));
-          peopleIdsByName[personName] = "1";
+          peopleIdsByName[personName] = '1';
         }
       }
 
@@ -83,20 +84,21 @@ export class WorkdayImportComponent implements OnInit {
   }
 
   private importFeedbackForPerson(person: Person) {
-    if (!this.feedbackList)
+    if (!this.feedbackList) {
       return;
+    }
 
     let batchFeedback: Feedback[] = [];
     for (let i = 0; i < this.feedbackList.length; i++) {
       const feedback = this.feedbackList[i];
-      if (feedback["About"] == person.name && feedback["Feedback"] && !this.isPoll(feedback["Question"])) {
-        const dateObj = XLSX.SSF.parse_date_code(feedback["Date"]);
+      if (feedback['About'] == person.name && feedback['Feedback'] && !this.isPoll(feedback['Question'])) {
+        const dateObj = XLSX.SSF.parse_date_code(feedback['Date']);
 
         const feedbackItem = {
           personId: person.id,
-          from: feedback["From"],
+          from: feedback['From'],
           createdOn: new Date(dateObj.y, dateObj.m - 1, dateObj.d, dateObj.H, dateObj.M, dateObj.S),
-          content: "Q: " + feedback["Question"] + "\n\nA: " + feedback["Feedback"],
+          content: 'Q: ' + feedback['Question'] + '\n\nA: ' + feedback['Feedback'],
           feedbackType: FeedbackType.Feedback
         };
 
@@ -123,7 +125,7 @@ export class WorkdayImportComponent implements OnInit {
   }
 
   private isPoll(question: string): boolean {
-    const isPoll = question && question.indexOf("1. ") !== -1 && question.indexOf("2. ") !== -1 && question.indexOf("3. ") !== -1;
+    const isPoll = question && question.indexOf('1. ') !== -1 && question.indexOf('2. ') !== -1 && question.indexOf('3. ') !== -1;
     return isPoll;
   }
 }

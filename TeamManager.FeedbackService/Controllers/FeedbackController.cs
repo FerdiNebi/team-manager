@@ -54,7 +54,14 @@ namespace TeamManager.FeedbackService.Controllers
             {
                 foreach (var feedback in feedbacks)
                 {
-                    await this.service.CreateAsync(feedback);
+                    try
+                    {
+                        await this.service.CreateAsync(feedback);
+                    }
+                    catch (ArgumentException)
+                    {
+                        // Do nothing
+                    }
                 }
 
                 return Ok();
